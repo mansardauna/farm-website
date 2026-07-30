@@ -1,16 +1,22 @@
-# Ankabit Farm Apache .htaccess Rewrite Rules for PHP
+# Apache URL Rewriting for Ankabit Farm (Pure HTML + processor.php)
 RewriteEngine On
 RewriteBase /
 
-# Map clean API routes to PHP scripts
-RewriteRule ^api/captcha/?$ captcha.php [L,QSA]
-RewriteRule ^api/leads/step1/?$ process-lead.php?action=step1 [L,QSA]
-RewriteRule ^api/leads/step2/?$ process-lead.php?action=step2 [L,QSA]
+# 1. API Route -> processor.php
+RewriteRule ^api/captcha/?$ processor.php?action=captcha [L,QSA]
+RewriteRule ^api/leads/step1/?$ processor.php?action=step1 [L,QSA]
+RewriteRule ^api/leads/step2/?$ processor.php?action=step2 [L,QSA]
 
-# Map clean page routes to PHP files
-RewriteRule ^order/?$ order.php [L,QSA]
-RewriteRule ^privacy/?$ privacy.php [L,QSA]
-RewriteRule ^terms/?$ terms.php [L,QSA]
+# 2. Clean HTML URL Rewrites
+RewriteRule ^$ index.html [L]
+RewriteRule ^order/?$ order.html [L]
+RewriteRule ^privacy/?$ privacy.html [L]
+RewriteRule ^terms/?$ terms.html [L]
 
-# Map default root to index.php
-DirectoryIndex index.php index.html
+# 3. Serve Existing Files Directly
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# 4. Fallback to index.html
+RewriteRule . index.html [L]

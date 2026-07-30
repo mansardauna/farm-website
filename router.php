@@ -1,13 +1,12 @@
 <?php
-// PHP Built-in Server Router Script for Ankabit Farm
+// PHP Built-in Server Router Script for Ankabit Farm (Pure HTML Frontend + processor.php Backend)
 $uri = urldecode(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
 
 // Determine file path
 $filePath = __DIR__ . $uri;
 
 if ($uri !== '/' && file_exists($filePath) && !is_dir($filePath)) {
-    // Return false to let PHP serve the static asset directly with correct MIME type
-    return false;
+    return false; // let PHP serve static asset directly with correct MIME type
 }
 
 // Check inside public/ directory if asset is requested
@@ -21,37 +20,33 @@ if ($uri !== '/' && file_exists($publicPath) && !is_dir($publicPath)) {
     exit;
 }
 
-// Clean URL Routing to PHP files
-if ($uri === '/' || $uri === '/index' || $uri === '/index.php') {
-    require __DIR__ . '/index.php';
+// Route API Requests to single processor.php
+if (str_starts_with($uri, '/processor.php') || str_starts_with($uri, '/api/')) {
+    require __DIR__ . '/processor.php';
     exit;
 }
 
-if ($uri === '/order' || $uri === '/order.php') {
-    require __DIR__ . '/order.php';
+// Clean URL Routing to Pure HTML Pages
+if ($uri === '/' || $uri === '/index' || $uri === '/index.html' || $uri === '/index.php') {
+    readfile(__DIR__ . '/index.html');
     exit;
 }
 
-if ($uri === '/privacy' || $uri === '/privacy.php') {
-    require __DIR__ . '/privacy.php';
+if ($uri === '/order' || $uri === '/order.html' || $uri === '/order.php') {
+    readfile(__DIR__ . '/order.html');
     exit;
 }
 
-if ($uri === '/terms' || $uri === '/terms.php') {
-    require __DIR__ . '/terms.php';
+if ($uri === '/privacy' || $uri === '/privacy.html' || $uri === '/privacy.php') {
+    readfile(__DIR__ . '/privacy.html');
     exit;
 }
 
-if ($uri === '/api/captcha' || $uri === '/captcha.php') {
-    require __DIR__ . '/captcha.php';
+if ($uri === '/terms' || $uri === '/terms.html' || $uri === '/terms.php') {
+    readfile(__DIR__ . '/terms.html');
     exit;
 }
 
-if ($uri === '/api/leads/step1' || $uri === '/api/leads/step2' || $uri === '/process-lead.php') {
-    require __DIR__ . '/process-lead.php';
-    exit;
-}
-
-// Fallback to index.php
-require __DIR__ . '/index.php';
+// Fallback to index.html
+readfile(__DIR__ . '/index.html');
 ?>

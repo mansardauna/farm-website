@@ -1,8 +1,3 @@
-<?php
-// Ankabit Farm Landing Page (Server Rendered PHP)
-session_start();
-require_once __DIR__ . '/config.php';
-?>
 <!DOCTYPE html>
 <html lang="en-NG">
 <head>
@@ -20,14 +15,12 @@ require_once __DIR__ . '/config.php';
   <meta property="og:title" content="Ankabit Farm - Direct Wholesale Egg Supply in Nigeria">
   <meta property="og:description" content="Fresh, bio-secure farm direct eggs. Minimum wholesale order: 100 crates. Instant delivery logistics to Lagos, Ogun, Abuja, and nationwide.">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://ankabitfarm.com.ng/">
-  <meta property="og:image" content="https://ankabitfarm.com.ng/images/hero-egg-bg.png">
 
   <!-- Tailwind CSS & Custom Design System -->
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="/css/styles.css">
 
-  <!-- JSON-LD Structured Data for 100% SEO -->
+  <!-- JSON-LD Structured Data -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -36,7 +29,7 @@ require_once __DIR__ . '/config.php';
     "url": "https://ankabitfarm.com.ng",
     "description": "Biosecure commercial egg producer and B2B egg supplier in Nigeria.",
     "telephone": "+2348002652248",
-    "email": "<?php echo ADMIN_EMAIL; ?>",
+    "email": "trade@ankabitfarm.com.ng",
     "address": {
       "@type": "PostalAddress",
       "addressLocality": "Abeokuta",
@@ -48,7 +41,7 @@ require_once __DIR__ . '/config.php';
 </head>
 <body class="bg-[#F5F7FA] text-slate-900 antialiased font-sans">
 
-  <!-- Accessible Skip to Main Content Link -->
+  <!-- Accessible Skip Link -->
   <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[100] focus:px-4 focus:py-2 focus:bg-blue-600 focus:text-white font-bold">Skip to main content</a>
 
   <!-- Header / Navbar -->
@@ -66,7 +59,7 @@ require_once __DIR__ . '/config.php';
           <span class="text-2xl font-bold font-serif-heading text-slate-900 tracking-tight">AnkabitFarm</span>
         </a>
 
-        <!-- Center Navigation -->
+        <!-- Center Navigation (Nav items in header font, NOT bold: About, Service, Contact) -->
         <nav role="navigation" aria-label="Main Navigation" class="hidden md:flex items-center space-x-10 text-xl font-normal font-serif-heading text-slate-700">
           <a href="#about" class="hover:text-slate-900 transition-colors">About</a>
           <a href="#services" class="hover:text-slate-900 transition-colors">Service</a>
@@ -183,7 +176,6 @@ require_once __DIR__ . '/config.php';
 
         <div class="grid lg:grid-cols-12 gap-8 items-stretch">
           
-          <!-- Left Stack: Feature Cards -->
           <div class="lg:col-span-6 space-y-5">
             <div class="p-7 bg-white border border-slate-200 space-y-2">
               <h3 class="text-xl font-bold font-heading text-slate-900">1. Verified wholesale orders</h3>
@@ -201,7 +193,6 @@ require_once __DIR__ . '/config.php';
             </div>
           </div>
 
-          <!-- Right Card: Photo -->
           <div class="lg:col-span-6">
             <div class="relative rounded-card-lg overflow-hidden border border-slate-200 h-full min-h-[420px] bg-slate-900">
               <img src="/images/farm-distributor.png" alt="Ankabit Agribusiness Manager inspecting commercial egg dispatch" class="w-full h-full object-cover opacity-95">
@@ -329,7 +320,7 @@ require_once __DIR__ . '/config.php';
       </div>
     </section>
 
-    <!-- SECTION 5: CONTACT LEAD FORM -->
+    <!-- SECTION 5: CONTACT LEAD FORM (CONNECTED TO SINGLE PROCESSOR.PHP) -->
     <section id="application-form" class="py-20 bg-[#F5F7FA] text-slate-900 border-t border-slate-200" aria-labelledby="contact-heading">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid lg:grid-cols-12 gap-12 items-start">
@@ -347,7 +338,7 @@ require_once __DIR__ . '/config.php';
             <div class="space-y-4 pt-6 text-sm text-slate-700 border-t border-slate-200">
               <div>
                 <span class="block text-xs uppercase font-bold text-slate-500">Sales Email</span>
-                <a href="mailto:<?php echo ADMIN_EMAIL; ?>" class="font-bold text-slate-900 text-base hover:text-blue-600"><?php echo ADMIN_EMAIL; ?></a>
+                <a href="mailto:trade@ankabitfarm.com.ng" class="font-bold text-slate-900 text-base hover:text-blue-600">trade@ankabitfarm.com.ng</a>
               </div>
 
               <div>
@@ -382,22 +373,21 @@ require_once __DIR__ . '/config.php';
 
               <!-- STEP 1 PANE -->
               <div id="step1Pane" class="step-pane active-pane">
-                <form id="leadStep1Form" class="space-y-5" action="/process-lead.php?action=step1" method="POST">
-                  
+                <form id="leadStep1Form" class="space-y-5">
                   <div class="material-field-group">
                     <label for="fullName" class="material-field-label">Full Name / Business Name *</label>
-                    <input type="text" id="fullName" name="fullName" required placeholder="e.g. Chief Adebayo / Sunshine Bakery" class="material-field-input">
+                    <input type="text" id="fullName" required placeholder="e.g. Chief Adebayo / Sunshine Bakery" class="material-field-input">
                   </div>
 
                   <div class="grid sm:grid-cols-2 gap-4">
                     <div class="material-field-group">
                       <label for="email" class="material-field-label">Business Email *</label>
-                      <input type="email" id="email" name="email" required placeholder="e.g. adebayo@market.ng" class="material-field-input">
+                      <input type="email" id="email" required placeholder="e.g. adebayo@market.ng" class="material-field-input">
                     </div>
 
                     <div class="material-field-group">
                       <label for="phone" class="material-field-label">Phone Number (WhatsApp) *</label>
-                      <input type="tel" id="phone" name="phone" required placeholder="e.g. 0803 123 4567" class="material-field-input">
+                      <input type="tel" id="phone" required placeholder="e.g. 0803 123 4567" class="material-field-input">
                     </div>
                   </div>
 
@@ -409,7 +399,7 @@ require_once __DIR__ . '/config.php';
                       </label>
                       <button type="button" id="refreshCaptchaBtn" class="text-xs text-slate-600 hover:text-slate-900 underline">Refresh</button>
                     </div>
-                    <input type="number" id="captchaAnswer" name="captchaAnswer" required placeholder="Enter answer" class="material-field-input bg-white">
+                    <input type="number" id="captchaAnswer" required placeholder="Enter answer" class="material-field-input bg-white">
                   </div>
 
                   <button type="submit" id="step1SubmitBtn" class="w-full btn-pill-blue text-sm uppercase tracking-wider">
@@ -420,28 +410,28 @@ require_once __DIR__ . '/config.php';
 
               <!-- STEP 2 PANE -->
               <div id="step2Pane" class="step-pane hidden-pane">
-                <form id="leadStep2Form" class="space-y-5" action="/process-lead.php?action=step2" method="POST">
+                <form id="leadStep2Form" class="space-y-5">
                   <div class="p-3 bg-blue-50 border border-blue-200 text-blue-700 text-xs font-bold">
                     ✓ Contact saved! Now select order quantity & destination state/LGA.
                   </div>
 
                   <div class="material-field-group">
                     <label for="quantityCrates" class="material-field-label">Quantity in Crates (Minimum 100) *</label>
-                    <input type="number" id="quantityCrates" name="quantityCrates" min="100" value="100" required class="material-field-input font-bold text-xl">
+                    <input type="number" id="quantityCrates" min="100" value="100" required class="material-field-input font-bold text-xl">
                     <p class="text-xs text-blue-600 mt-1">Volume: <span id="estEggs" class="font-semibold">3,000 eggs</span> | Weight: <span id="estWeight" class="font-semibold">~200 kg</span></p>
                   </div>
 
                   <div class="grid sm:grid-cols-2 gap-4">
                     <div class="material-field-group">
                       <label for="deliveryState" class="material-field-label">Destination State (36 States + FCT) *</label>
-                      <select id="deliveryState" name="deliveryState" required class="material-field-input font-medium bg-white">
+                      <select id="deliveryState" required class="material-field-input font-medium bg-white">
                         <option value="">Loading states...</option>
                       </select>
                     </div>
 
                     <div class="material-field-group">
                       <label for="deliveryLGA" class="material-field-label">Local Government (LGA) *</label>
-                      <select id="deliveryLGA" name="deliveryLGA" required class="material-field-input font-medium bg-white">
+                      <select id="deliveryLGA" required class="material-field-input font-medium bg-white">
                         <option value="">-- Select State First --</option>
                       </select>
                     </div>
@@ -449,7 +439,7 @@ require_once __DIR__ . '/config.php';
 
                   <div class="material-field-group">
                     <label for="notes" class="material-field-label">Logistics / Landmark Notes</label>
-                    <textarea id="notes" name="notes" rows="3" placeholder="Specify landmark market or delivery schedule..." class="material-field-input"></textarea>
+                    <textarea id="notes" rows="3" placeholder="Specify landmark market or delivery schedule..." class="material-field-input"></textarea>
                   </div>
 
                   <button type="submit" id="step2SubmitBtn" class="w-full btn-pill-blue text-sm uppercase tracking-wider">
@@ -479,13 +469,12 @@ require_once __DIR__ . '/config.php';
 
   </main>
 
-  <!-- FOOTER WITH QUICK LINKS & DIRECT CONTACT INFO (Updated per Request) -->
+  <!-- FOOTER WITH QUICK LINKS & DIRECT CONTACT INFO -->
   <footer role="contentinfo" class="bg-[#050914] text-white py-16 border-t border-slate-800 text-xs">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
       
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
         
-        <!-- Column 1: Brand Info & Minimum Order Notice -->
         <div class="space-y-4">
           <div class="flex items-center space-x-3">
             <div class="w-9 h-9 bg-blue-600 text-white flex items-center justify-center">
@@ -505,7 +494,6 @@ require_once __DIR__ . '/config.php';
           </div>
         </div>
 
-        <!-- Column 2: Quick Links -->
         <div class="space-y-4">
           <h3 class="text-sm font-bold text-white uppercase tracking-wider border-b border-slate-800 pb-2">Quick Links</h3>
           <ul class="space-y-2.5 text-slate-300">
@@ -513,12 +501,11 @@ require_once __DIR__ . '/config.php';
             <li><a href="#services" class="hover:text-blue-400 transition-colors flex items-center space-x-1.5"><span>•</span><span>Distribution Services</span></a></li>
             <li><a href="#trade-accounts" class="hover:text-blue-400 transition-colors flex items-center space-x-1.5"><span>•</span><span>Wholesale Qualification</span></a></li>
             <li><a href="#application-form" class="hover:text-blue-400 transition-colors flex items-center space-x-1.5"><span>•</span><span>Submit Order Inquiry</span></a></li>
-            <li><a href="#" class="open-privacy-modal hover:text-blue-400 transition-colors flex items-center space-x-1.5"><span>•</span><span>Privacy Policy</span></a></li>
-            <li><a href="#" class="open-terms-modal hover:text-blue-400 transition-colors flex items-center space-x-1.5"><span>•</span><span>Terms & Conditions</span></a></li>
+            <li><a href="/privacy.html" class="hover:text-blue-400 transition-colors flex items-center space-x-1.5"><span>•</span><span>Privacy Policy</span></a></li>
+            <li><a href="/terms.html" class="hover:text-blue-400 transition-colors flex items-center space-x-1.5"><span>•</span><span>Terms & Conditions</span></a></li>
           </ul>
         </div>
 
-        <!-- Column 3: Regional Dispatch Coverage -->
         <div class="space-y-4">
           <h3 class="text-sm font-bold text-white uppercase tracking-wider border-b border-slate-800 pb-2">Regional Dispatch</h3>
           <ul class="space-y-2.5 text-slate-300">
@@ -545,7 +532,6 @@ require_once __DIR__ . '/config.php';
           </ul>
         </div>
 
-        <!-- Column 4: Direct Contact & Sales Desk Info -->
         <div class="space-y-4">
           <h3 class="text-sm font-bold text-white uppercase tracking-wider border-b border-slate-800 pb-2">Sales & Dispatch Desk</h3>
           <div class="space-y-3 text-slate-300">
@@ -570,7 +556,7 @@ require_once __DIR__ . '/config.php';
               <span class="text-blue-400 font-bold">✉️</span>
               <div>
                 <span class="block font-bold text-white text-xs">Trade Email</span>
-                <a href="mailto:<?php echo ADMIN_EMAIL; ?>" class="text-slate-300 hover:text-blue-400 block"><?php echo ADMIN_EMAIL; ?></a>
+                <a href="mailto:trade@ankabitfarm.com.ng" class="text-slate-300 hover:text-blue-400 block">trade@ankabitfarm.com.ng</a>
               </div>
             </div>
 
@@ -586,12 +572,11 @@ require_once __DIR__ . '/config.php';
 
       </div>
 
-      <!-- Footer Bottom Copyright -->
       <div class="pt-8 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-slate-500 text-[11px]">
-        <p>© <?php echo date('Y'); ?> Ankabit Farm Nigeria. All rights reserved. Minimum wholesale order: 100 crates (3,000 eggs).</p>
+        <p>© 2026 Ankabit Farm Nigeria. All rights reserved. Minimum wholesale order: 100 crates (3,000 eggs).</p>
         <div class="flex items-center space-x-6">
-          <a href="#" class="open-privacy-modal hover:text-slate-300 underline font-semibold">Privacy Policy</a>
-          <a href="#" class="open-terms-modal hover:text-slate-300 underline font-semibold">Terms & Conditions</a>
+          <a href="/privacy.html" class="hover:text-slate-300 underline font-semibold">Privacy Policy</a>
+          <a href="/terms.html" class="hover:text-slate-300 underline font-semibold">Terms & Conditions</a>
         </div>
       </div>
 
@@ -607,7 +592,7 @@ require_once __DIR__ . '/config.php';
       </div>
 
       <div class="space-y-4 text-sm leading-relaxed">
-        <p><strong>Effective Date:</strong> <?php echo date('F j, Y'); ?> | NDPR & Data Protection Compliant</p>
+        <p><strong>Effective Date:</strong> July 30, 2026 | NDPR & Data Protection Compliant</p>
         <p>At <strong>Ankabit Farm</strong>, protecting your data is paramount. When submitting wholesale egg supply inquiries, our system records your Step 1 contact information (Full Name, Email, Phone Number) immediately to ensure our sales desk can contact you even if your connection drops.</p>
       </div>
 

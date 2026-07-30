@@ -237,5 +237,20 @@
         "deliveryLGA": "Ikeja \/ Mile 12 Market",
         "notes": "Require Large-size eggs in wooden crates.",
         "status": "WHOLESALE_ORDER_COMPLETED"
+    },
+    {
+        "id": "ABF-C4EEE310-973",
+        "fullName": "Hajia Fatima Supermarket Ltd",
+        "email": "fatima@kanomarket.ng",
+        "phone": "08039876543",
+        "createdAt": "2026-07-30T18:04:24+02:00",
+        "updatedAt": "2026-07-30T18:04:24+02:00",
+        "step1Completed": true,
+        "step2Completed": false,
+        "quantityCrates": null,
+        "deliveryState": null,
+        "deliveryLGA": null,
+        "notes": null,
+        "status": "STEP1_CONTACT_CAPTURED"
     }
 ]

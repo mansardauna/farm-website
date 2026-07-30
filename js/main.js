@@ -1,4 +1,4 @@
-// Ankabit Farm Client JavaScript with Complete Nigeria States & LGAs Integration
+// Ankabit Farm Client JavaScript connected to single processor.php
 document.addEventListener('DOMContentLoaded', () => {
   let currentCaptchaId = '';
   let activeLeadId = '';
@@ -27,8 +27,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // Initialize Nigeria States Dropdown dynamically
   if (deliveryStateSelect && typeof NIGERIA_STATES_AND_LGAS !== 'undefined') {
     deliveryStateSelect.innerHTML = '<option value="">-- Select Destination State --</option>';
-    
-    // Sort State names alphabetically
     const stateNames = Object.keys(NIGERIA_STATES_AND_LGAS).sort();
     
     stateNames.forEach(state => {
@@ -39,20 +37,15 @@ document.addEventListener('DOMContentLoaded', () => {
       deliveryStateSelect.appendChild(option);
     });
 
-    // Populate initial LGAs for default selected state (Lagos)
     updateLGADropdown(deliveryStateSelect.value || 'Lagos');
 
-    // Event Listener for State Change
     deliveryStateSelect.addEventListener('change', (e) => {
-      const selectedState = e.target.value;
-      updateLGADropdown(selectedState);
+      updateLGADropdown(e.target.value);
     });
   }
 
-  // Helper Function: Populate LGAs based on selected Nigerian State
   function updateLGADropdown(stateName) {
     if (!deliveryLGASelect) return;
-    
     deliveryLGASelect.innerHTML = '<option value="">-- Select Local Government (LGA) --</option>';
     
     if (stateName && NIGERIA_STATES_AND_LGAS[stateName]) {
@@ -69,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Distribution Services Slider Buttons (Positioned Below Cards)
+  // Distribution Services Slider Buttons Below Cards
   const servicesSlider = document.getElementById('servicesSlider');
   const sliderPrevBtn = document.getElementById('servicesSliderPrev');
   const sliderNextBtn = document.getElementById('servicesSliderNext');
@@ -134,7 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Load Captcha on Startup
+  // Fetch Captcha from single processor.php endpoint
   fetchCaptcha();
 
   if (refreshCaptchaBtn) {
@@ -144,12 +137,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Fetch Captcha Function
   async function fetchCaptcha() {
     if (!captchaQuestionEl) return;
     captchaQuestionEl.textContent = 'Loading captcha...';
     try {
-      const res = await fetch('/api/captcha');
+      const res = await fetch('/processor.php?action=captcha');
       const data = await res.json();
       if (data.captchaId) {
         currentCaptchaId = data.captchaId;
@@ -161,7 +153,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Show Alert Banner
   function showAlert(msg, isError = true) {
     if (!formAlert) return;
     formAlert.classList.remove('hidden', 'bg-red-100', 'border-red-500', 'text-red-800', 'bg-emerald-100', 'border-emerald-500', 'text-emerald-800');
@@ -187,7 +178,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Handle Step 1 Submission
+  // Handle Step 1 Submission to processor.php?action=step1
   if (step1Form) {
     step1Form.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -209,7 +200,7 @@ document.addEventListener('DOMContentLoaded', () => {
       submitBtn.innerHTML = `<svg class="animate-spin h-5 w-5 mx-auto text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>`;
 
       try {
-        const response = await fetch('/api/leads/step1', {
+        const response = await fetch('/processor.php?action=step1', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -261,7 +252,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Handle Step 2 Submission
+  // Handle Step 2 Submission to processor.php?action=step2
   if (step2Form) {
     step2Form.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -290,7 +281,7 @@ document.addEventListener('DOMContentLoaded', () => {
       submitBtn.innerHTML = `<svg class="animate-spin h-5 w-5 mx-auto text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>`;
 
       try {
-        const response = await fetch('/api/leads/step2', {
+        const response = await fetch('/processor.php?action=step2', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
