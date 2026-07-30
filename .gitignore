@@ -1,7 +1,0 @@
-# Node & Temporary Files
-node_modules/
-npm-debug.log
-.DS_Store
-
-# Sensitive Data / Captcha Cache
-data/captchas/
