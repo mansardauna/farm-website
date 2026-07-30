@@ -7,20 +7,208 @@
   <meta name="description" content="Ankabit Farm is Nigeria's top biosecure commercial poultry producer. Direct wholesale egg supply across Lagos, Ogun, Abuja, and nationwide. Minimum order 100 crates.">
   <link rel="canonical" href="https://ankabitfarm.com.ng/">
 
-  <!-- GEO Localization Tags -->
+  <!-- GEO & OpenGraph Tags -->
   <meta name="geo.region" content="NG">
   <meta name="geo.placename" content="Lagos, Ogun, Abuja, Nigeria">
-
-  <!-- OpenGraph & Twitter -->
   <meta property="og:title" content="Ankabit Farm - Direct Wholesale Egg Supply in Nigeria">
-  <meta property="og:description" content="Fresh, bio-secure farm direct eggs. Minimum wholesale order: 100 crates. Instant delivery logistics to Lagos, Ogun, Abuja, and nationwide.">
+  <meta property="og:description" content="Fresh, bio-secure farm direct eggs. Minimum wholesale order: 100 crates. Delivery to Lagos, Ogun, Abuja, and nationwide.">
   <meta property="og:type" content="website">
 
-  <!-- Tailwind CSS & Custom Design System -->
+  <!-- Google Fonts & Tailwind CSS -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="/css/styles.css">
 
-  <!-- JSON-LD Structured Data -->
+  <!-- Complete Embedded Design System & Custom Styles -->
+  <style>
+    :root {
+      --font-serif: 'Cormorant Garamond', Georgia, serif;
+      --font-sans: 'DM Sans', system-ui, -apple-system, sans-serif;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: #F5F7FA;
+      color: #0F172A;
+    }
+
+    .font-serif-heading { font-family: var(--font-serif); }
+    .font-heading { font-family: var(--font-sans); }
+
+    /* Hero Background & Overlay */
+    .hero-bg-section {
+      background: linear-gradient(135deg, rgba(8, 14, 30, 0.45) 0%, rgba(15, 23, 42, 0.35) 100%),
+                  url('/images/hero-egg-bg.png') center/cover no-repeat;
+    }
+
+    .hero-overlay-lighter {
+      background: linear-gradient(180deg, rgba(8, 14, 30, 0.50) 0%, rgba(8, 14, 30, 0.25) 60%, rgba(8, 14, 30, 0.65) 100%);
+    }
+
+    /* Buttons */
+    .btn-pill-blue {
+      background-color: #2563EB;
+      color: #FFFFFF;
+      font-weight: 700;
+      padding: 0.85rem 1.75rem;
+      border-radius: 0px;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .btn-pill-blue:hover { background-color: #1D4ED8; }
+
+    .btn-pill-dark {
+      background-color: #0F172A;
+      color: #FFFFFF;
+      font-weight: 700;
+      padding: 0.85rem 1.75rem;
+      border-radius: 0px;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .btn-pill-dark:hover { background-color: #1E293B; }
+
+    .btn-hero-secondary {
+      background-color: rgba(255, 255, 255, 0.1);
+      color: #FFFFFF;
+      font-weight: 700;
+      padding: 0.85rem 1.75rem;
+      border: 2px solid #FFFFFF;
+      border-radius: 0px;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .btn-hero-secondary:hover {
+      background-color: #FFFFFF;
+      color: #0F172A;
+    }
+
+    /* Material UI Input Format */
+    .material-field-group {
+      position: relative;
+      margin-bottom: 1.25rem;
+    }
+
+    .material-field-label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #475569;
+      margin-bottom: 0.35rem;
+    }
+
+    .material-field-input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      background-color: #F8FAFC;
+      border: 1px solid #CBD5E1;
+      border-bottom: 2px solid #64748B;
+      color: #0F172A;
+      font-size: 0.95rem;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .material-field-input:focus {
+      background-color: #FFFFFF;
+      border-color: #2563EB;
+      border-bottom-color: #2563EB;
+      box-shadow: 0 1px 3px rgba(37, 99, 235, 0.1);
+    }
+
+    /* Auto-Scrolling Logo Ticker */
+    @keyframes tickerScroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    .logo-ticker-track {
+      display: flex;
+      width: 200%;
+      animation: tickerScroll 25s linear infinite;
+    }
+
+    .logo-ticker-track:hover { animation-play-state: paused; }
+
+    /* Services Touch Slider */
+    .slider-container {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .slider-container::-webkit-scrollbar { display: none; }
+    .slider-slide {
+      flex: 0 0 85%;
+      scroll-snap-align: start;
+    }
+    @media (min-width: 768px) {
+      .slider-container { display: grid; overflow-x: visible; }
+      .slider-slide { flex: none; }
+    }
+
+    /* Form Panes */
+    .step-pane { transition: opacity 0.25s ease; }
+    .hidden-pane { display: none; opacity: 0; }
+    .active-pane { display: block; opacity: 1; }
+
+    /* Modals */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      background-color: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+    .modal-backdrop.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .modal-box {
+      background-color: #FFFFFF;
+      width: 100%;
+      max-width: 640px;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 2rem;
+      border: 1px solid #E2E8F0;
+    }
+
+    .tab-pill {
+      padding: 0.6rem 1.25rem;
+      background-color: #1E293B;
+      color: #94A3B8;
+      font-size: 0.85rem;
+      font-weight: 600;
+      border: 1px solid #334155;
+      transition: all 0.2s ease;
+    }
+    .tab-pill.active, .tab-pill:hover {
+      background-color: #2563EB;
+      color: #FFFFFF;
+      border-color: #2563EB;
+    }
+  </style>
+
+  <!-- Structured Data SEO -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -29,7 +217,7 @@
     "url": "https://ankabitfarm.com.ng",
     "description": "Biosecure commercial egg producer and B2B egg supplier in Nigeria.",
     "telephone": "+2348002652248",
-    "email": "trade@ankabitfarm.com.ng",
+    "email": "olaomansur@gmail.com",
     "address": {
       "@type": "PostalAddress",
       "addressLocality": "Abeokuta",
@@ -59,7 +247,7 @@
           <span class="text-2xl font-bold font-serif-heading text-slate-900 tracking-tight">AnkabitFarm</span>
         </a>
 
-        <!-- Center Navigation (Nav items in header font, NOT bold: About, Service, Contact) -->
+        <!-- Center Navigation (Nav items in header font, NOT bold: About, Service, Contact alone) -->
         <nav role="navigation" aria-label="Main Navigation" class="hidden md:flex items-center space-x-10 text-xl font-normal font-serif-heading text-slate-700">
           <a href="#about" class="hover:text-slate-900 transition-colors">About</a>
           <a href="#services" class="hover:text-slate-900 transition-colors">Service</a>
@@ -98,6 +286,7 @@
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20 py-20 w-full">
         <div class="max-w-3xl space-y-8 text-left">
           
+          <!-- Headline on one single line -->
           <h1 class="text-4xl sm:text-6xl lg:text-7xl font-normal font-serif-heading leading-[1.08] text-white">
             <span class="block sm:inline-block sm:whitespace-nowrap">The distribution partner</span> <br class="hidden sm:inline">
             <span class="italic font-normal text-blue-400">your business relies on</span>
@@ -113,6 +302,7 @@
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
             </a>
 
+            <!-- Bordered Secondary Hero Button -->
             <a href="#application-form" class="btn-hero-secondary text-base flex items-center space-x-2">
               <span>Wholesale Logistics</span>
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
@@ -309,6 +499,7 @@
           </div>
         </div>
 
+        <!-- Slider Controls Positioned BELOW Cards -->
         <div class="flex items-center justify-center space-x-4 pt-4">
           <button id="servicesSliderPrev" aria-label="Previous Service Slide" class="px-5 py-2.5 bg-white border border-slate-300 text-slate-900 font-bold hover:bg-slate-100 flex items-center space-x-2 text-sm">
             <span>&larr; Prev</span>
@@ -320,7 +511,7 @@
       </div>
     </section>
 
-    <!-- SECTION 5: CONTACT LEAD FORM (CONNECTED TO SINGLE PROCESSOR.PHP) -->
+    <!-- SECTION 5: CONTACT LEAD FORM (MATERIAL UI FORMAT) -->
     <section id="application-form" class="py-20 bg-[#F5F7FA] text-slate-900 border-t border-slate-200" aria-labelledby="contact-heading">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid lg:grid-cols-12 gap-12 items-start">
@@ -338,7 +529,7 @@
             <div class="space-y-4 pt-6 text-sm text-slate-700 border-t border-slate-200">
               <div>
                 <span class="block text-xs uppercase font-bold text-slate-500">Sales Email</span>
-                <a href="mailto:trade@ankabitfarm.com.ng" class="font-bold text-slate-900 text-base hover:text-blue-600">trade@ankabitfarm.com.ng</a>
+                <a href="mailto:olaomansur@gmail.com" class="font-bold text-slate-900 text-base hover:text-blue-600">olaomansur@gmail.com</a>
               </div>
 
               <div>
@@ -457,7 +648,7 @@
                   Order Specs: <span id="confQty" class="text-blue-600 font-bold">100 Crates</span> to <span id="confState" class="text-slate-900 font-bold">Lagos</span>.
                   Our trade desk will contact your phone shortly.
                 </div>
-                <a href="/" class="inline-block btn-pill-dark text-xs">Return to Home Page</a>
+                <a href="#application-form" onclick="location.reload()" class="inline-block btn-pill-dark text-xs">Submit New Inquiry</a>
               </div>
 
             </div>
@@ -501,8 +692,8 @@
             <li><a href="#services" class="hover:text-blue-400 transition-colors flex items-center space-x-1.5"><span>•</span><span>Distribution Services</span></a></li>
             <li><a href="#trade-accounts" class="hover:text-blue-400 transition-colors flex items-center space-x-1.5"><span>•</span><span>Wholesale Qualification</span></a></li>
             <li><a href="#application-form" class="hover:text-blue-400 transition-colors flex items-center space-x-1.5"><span>•</span><span>Submit Order Inquiry</span></a></li>
-            <li><a href="/privacy.html" class="hover:text-blue-400 transition-colors flex items-center space-x-1.5"><span>•</span><span>Privacy Policy</span></a></li>
-            <li><a href="/terms.html" class="hover:text-blue-400 transition-colors flex items-center space-x-1.5"><span>•</span><span>Terms & Conditions</span></a></li>
+            <li><a href="#" class="open-privacy-modal hover:text-blue-400 transition-colors flex items-center space-x-1.5"><span>•</span><span>Privacy Policy</span></a></li>
+            <li><a href="#" class="open-terms-modal hover:text-blue-400 transition-colors flex items-center space-x-1.5"><span>•</span><span>Terms & Conditions</span></a></li>
           </ul>
         </div>
 
@@ -556,7 +747,7 @@
               <span class="text-blue-400 font-bold">✉️</span>
               <div>
                 <span class="block font-bold text-white text-xs">Trade Email</span>
-                <a href="mailto:trade@ankabitfarm.com.ng" class="text-slate-300 hover:text-blue-400 block">trade@ankabitfarm.com.ng</a>
+                <a href="mailto:olaomansur@gmail.com" class="text-slate-300 hover:text-blue-400 block">olaomansur@gmail.com</a>
               </div>
             </div>
 
@@ -575,8 +766,8 @@
       <div class="pt-8 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-slate-500 text-[11px]">
         <p>© 2026 Ankabit Farm Nigeria. All rights reserved. Minimum wholesale order: 100 crates (3,000 eggs).</p>
         <div class="flex items-center space-x-6">
-          <a href="/privacy.html" class="hover:text-slate-300 underline font-semibold">Privacy Policy</a>
-          <a href="/terms.html" class="hover:text-slate-300 underline font-semibold">Terms & Conditions</a>
+          <a href="#" class="open-privacy-modal hover:text-slate-300 underline font-semibold">Privacy Policy</a>
+          <a href="#" class="open-terms-modal hover:text-slate-300 underline font-semibold">Terms & Conditions</a>
         </div>
       </div>
 
@@ -593,7 +784,8 @@
 
       <div class="space-y-4 text-sm leading-relaxed">
         <p><strong>Effective Date:</strong> July 30, 2026 | NDPR & Data Protection Compliant</p>
-        <p>At <strong>Ankabit Farm</strong>, protecting your data is paramount. When submitting wholesale egg supply inquiries, our system records your Step 1 contact information (Full Name, Email, Phone Number) immediately to ensure our sales desk can contact you even if your connection drops.</p>
+        <p>At <strong>Ankabit Farm</strong>, protecting your commercial trade data is paramount. When submitting wholesale egg supply inquiries, our system records your Step 1 contact information (Full Name, Business Email, WhatsApp Phone Number) immediately to ensure our sales desk can contact you even if your connection drops.</p>
+        <p>Contact Email: <a href="mailto:olaomansur@gmail.com" class="text-blue-600 font-bold underline">olaomansur@gmail.com</a></p>
       </div>
 
       <div class="pt-4 border-t border-slate-200 text-right">
@@ -621,7 +813,295 @@
     </div>
   </div>
 
-  <script src="/js/nigeria-data.js"></script>
-  <script src="/js/main.js"></script>
+  <!-- Embedded 36 Nigerian States & 774 LGAs Dataset -->
+  <script>
+  const NIGERIA_STATES_AND_LGAS = {
+    "Abia": ["Aba North", "Aba South", "Arochukwu", "Bende", "Ikwuano", "Isiala Ngwa North", "Isiala Ngwa South", "Isuikwuato", "Obi Ngwa", "Ohafia", "Osisioma", "Ugwunagbo", "Ukwa East", "Ukwa West", "Umuahia North", "Umuahia South", "Umu Nneochi"],
+    "Adamawa": ["Demsa", "Fufure", "Ganye", "Gayuk", "Gombi", "Grie", "Hong", "Jada", "Lamurde", "Madagali", "Maiha", "Mayo Belwa", "Michika", "Mubi North", "Mubi South", "Numan", "Shelleng", "Song", "Toungo", "Yola North", "Yola South"],
+    "Akwa Ibom": ["Abak", "Eastern Obolo", "Eket", "Esit Eket", "Essien Udim", "Etim Ekpo", "Etinan", "Ibeno", "Ibesikpo Asutan", "Ibiono-Ibom", "Ika", "Ikono", "Ikot Abasi", "Ikot Ekpene", "Ini", "Itu", "Mbo", "Mkpat-Enin", "Nsit-Atai", "Nsit-Ibom", "Nsit-Ubium", "Obot Akara", "Okobo", "Onna", "Oron", "Oruk Anam", "Udung-Uko", "Ukanafun", "Uruan", "Urue-Offong/Oruko", "Uyo"],
+    "Anambra": ["Aguata", "Anambra East", "Anambra West", "Anaocha", "Awka North", "Awka South", "Ayamelum", "Dunukofia", "Ekwusigo", "Idemili North", "Idemili South", "Ihiala", "Njikoka", "Nnewi North", "Nnewi South", "Ogbaru", "Onitsha North", "Onitsha South", "Orumba North", "Orumba South", "Oyi"],
+    "Bauchi": ["Alkaleri", "Bauchi", "Bogoro", "Damban", "Darazo", "Dass", "Gamawa", "Ganjuwa", "Giade", "Itas/Gadau", "Jama'are", "Katagum", "Kirfi", "Misau", "Ningi", "Shira", "Tafawa Balewa", "Toro", "Warji", "Zaki"],
+    "Bayelsa": ["Brass", "Ekeremor", "Kolokuma/Opokuma", "Nembe", "Ogbia", "Sagbama", "Southern Ijaw", "Yenagoa"],
+    "Benue": ["Agatu", "Apa", "Ado", "Buruku", "Gboko", "Guma", "Gwer East", "Gwer West", "Katsina-Ala", "Konshisha", "Kwande", "Logo", "Makurdi", "Obi", "Ogbadibo", "Ohimini", "Oju", "Okpokwu", "Oturkpo", "Tarka", "Ukum", "Ushongo", "Vandeikya"],
+    "Borno": ["Abadam", "Askira/Uba", "Bama", "Bayo", "Biu", "Chibok", "Damboa", "Dikwa", "Gubio", "Guzamala", "Gwoza", "Hawul", "Jere", "Kaga", "Kala/Balge", "Konduga", "Kukawa", "Kwaya Kusar", "Mafa", "Magumeri", "Maiduguri", "Marte", "Mobbar", "Monguno", "Ngala", "Nganzai", "Shani"],
+    "Cross River": ["Abi", "Akamkpa", "Akpabuyo", "Bakassi", "Bekwarra", "Biase", "Boki", "Calabar Municipal", "Calabar South", "Etung", "Ikom", "Obanliku", "Obubra", "Obudu", "Odukpani", "Ogoja", "Yakuur", "Yala"],
+    "Delta": ["Aniocha North", "Aniocha South", "Bomadi", "Burutu", "Ethiope East", "Ethiope West", "Ika North East", "Ika South", "Isoko North", "Isoko South", "Ndokwa East", "Ndokwa West", "Okpe", "Oshimili North", "Oshimili South", "Patani", "Sapele", "Udu", "Ughelli North", "Ughelli South", "Ukwuani", "Uvwie", "Warri North", "Warri South", "Warri South West"],
+    "Ebonyi": ["Abakaliki", "Afikpo North", "Afikpo South", "Ebonyi", "Ezza North", "Ezza South", "Ikwo", "Ishielu", "Ivo", "Izzi", "Ohaozara", "Ohaukwu", "Onicha"],
+    "Edo": ["Akoko-Edo", "Egor", "Esan Central", "Esan North-East", "Esan South-East", "Esan West", "Etsako Central", "Etsako East", "Etsako West", "Igueben", "Ikpoba Okha", "Orhionmwon", "Oredo", "Ovia North-East", "Ovia South-West", "Owan East", "Owan West", "Uhunmwonde"],
+    "Ekiti": ["Ado Ekiti", "Efon", "Ekiti East", "Ekiti South-West", "Ekiti West", "Emure", "Gbonyin", "Ido Osi", "Ijero", "Ikere", "Ikole", "Ilejemeje", "Irepodun/Ifelodun", "Ise/Orun", "Moba", "Oye"],
+    "Enugu": ["Aninri", "Awgu", "Enugu East", "Enugu North", "Enugu South", "Ezeagu", "Igbo Etiti", "Igbo Eze North", "Igbo Eze South", "Isi Uzo", "Nkanu East", "Nkanu West", "Nsukka", "Oji River", "Udenu", "Udi", "Uzo Uwani"],
+    "FCT (Abuja)": ["Abaji", "Bwari", "Gwagwalada", "Kuje", "Kwali", "Municipal Area Council (AMAC)"],
+    "Gombe": ["Akko", "Balanga", "Billiri", "Dukku", "Funakaye", "Gombe", "Kaltungo", "Kwami", "Nafada", "Shongom", "Yamaltu/Deba"],
+    "Imo": ["Aboh Mbaise", "Ahiazu Mbaise", "Ehime Mbano", "Ezinihitte", "Ideato North", "Ideato South", "Ihitte/Uboma", "Ikeduru", "Isiala Mbano", "Isu", "Mbaitoli", "Ngor Okpala", "Njaba", "Nkwerre", "Nwangele", "Obowo", "Oguta", "Ohaji/Egbema", "Okigwe", "Orlu", "Orsu", "Oru East", "Oru West", "Owerri Municipal", "Owerri North", "Owerri South"],
+    "Jigawa": ["Auyo", "Babura", "Biriniwa", "Birnin Kudu", "Buji", "Dutse", "Gagarawa", "Garki", "Gumel", "Guri", "Gwaram", "Gwiwa", "Hadejia", "Jahun", "Kafin Hausa", "Kaugama", "Kazaure", "Kiri Kasama", "Kiyawa", "Maigatari", "Malam Madori", "Miga", "Ringim", "Roni", "Sule Tankarkar", "Taura", "Yankwashi"],
+    "Kaduna": ["Birnin Gwari", "Chikun", "Giwa", "Igabi", "Ikara", "Jaba", "Jema'a", "Kachia", "Kaduna North", "Kaduna South", "Kagarko", "Kajuru", "Kaura", "Kauru", "Kubau", "Kudan", "Lere", "Makarfi", "Sabon Gari", "Sanga", "Soba", "Zangon Kataf", "Zaria"],
+    "Kano": ["Ajingi", "Albasu", "Bagwai", "Bebeji", "Bichi", "Bunkure", "Dala", "Dambatta", "Dawakin Kudu", "Dawakin Tofa", "Doguwa", "Fagge", "Gabasawa", "Garko", "Garun Mallam", "Gaya", "Gezawa", "Gwale", "Gwarzo", "Kabo", "Kano Municipal", "Karaye", "Kibiya", "Kiru", "Kumbotso", "Kunchi", "Kura", "Madobi", "Makoda", "Minjibir", "Nasarawa", "Rano", "Rimin Gado", "Rogo", "Shanono", "Sumaila", "Takai", "Tarauni", "Tofa", "Tsanyawa", "Tudun Wada", "Ungogo", "Warawa", "Wudil"],
+    "Katsina": ["Bakori", "Batagarawa", "Batsari", "Baure", "Bindawa", "Charanchi", "Dandume", "Danja", "Dan Musa", "Daura", "Dutsi", "Dutsin Ma", "Faskari", "Funtua", "Ingawa", "Jibia", "Kafur", "Kaita", "Kankara", "Kankia", "Katsina", "Kurfi", "Kusada", "Mai'Adua", "Malumfashi", "Mani", "Mashi", "Matazu", "Musawa", "Rimi", "Sabuwa", "Safana", "Sandamu", "Zango"],
+    "Kebbi": ["Aleiro", "Arewa Dandi", "Argungu", "Augie", "Bagudo", "Birnin Kebbi", "Bunza", "Dandi", "Fakai", "Gwandu", "Jega", "Kalgo", "Koko/Besse", "Maiyama", "Ngaski", "Sakaba", "Shanga", "Suru", "Danko/Wasagu", "Yauri", "Zuru"],
+    "Kogi": ["Adavi", "Ajaokuta", "Ankpa", "Bassa", "Dekina", "Ibaji", "Idah", "Igalamela Odolu", "Ijumu", "Kabba/Bunu", "Kogi", "Lokoja", "Mopa Muro", "Ofu", "Ogori/Magongo", "Okehi", "Okene", "Olamaboro", "Omala", "Yagba East", "Yagba West"],
+    "Kwara": ["Asa", "Baruten", "Edu", "Ekiti", "Ifelodun", "Ilorin East", "Ilorin South", "Ilorin West", "Irepodun", "Isin", "Kaiama", "Moro", "Offa", "Oke Ero", "Oyun", "Pategi"],
+    "Lagos": ["Agege", "Ajeromi-Ifelodun", "Alimosho", "Amuwo-Odofin", "Apapa", "Badagry", "Epe", "Eti-Osa", "Ibeju-Lekki", "Ifako-Ijaiye", "Ikeja", "Ikorodu", "Kosofe", "Lagos Island", "Lagos Mainland", "Mushin", "Ojo", "Oshodi-Isolo", "Shomolu", "Surulere"],
+    "Nasarawa": ["Akwanga", "Awe", "Doma", "Karu", "Keana", "Keffi", "Kokona", "Lafia", "Nasarawa", "Nasarawa Egon", "Obi", "Toto", "Wamba"],
+    "Niger": ["Agaie", "Agwara", "Bida", "Borgu", "Bosso", "Chanchaga", "Edati", "Gbako", "Gurara", "Katcha", "Kontagora", "Lapai", "Lavun", "Magama", "Mariga", "Mokwa", "Moya", "Paikoro", "Rafi", "Rijau", "Shiroro", "Suleja", "Tafa", "Wushishi"],
+    "Ogun": ["Abeokuta North", "Abeokuta South", "Ado-Odo/Ota", "Ewekoro", "Ifo", "Ijebu East", "Ijebu North", "Ijebu North East", "Ijebu Ode", "Ikenne", "Imeko Afon", "Ipokia", "Obafemi Owode", "Odeda", "Odogbolu", "Ogun Waterside", "Remo North", "Shagamu", "Yewa North", "Yewa South"],
+    "Ondo": ["Akoko North-East", "Akoko North-West", "Akoko South-West", "Akoko South-East", "Akure North", "Akure South", "Ese Odo", "Idanre", "Ifedore", "Ilaje", "Ile Oluji/Okeigbo", "Irele", "Odigbo", "Okitipupa", "Ondo East", "Ondo West", "Ose", "Owo"],
+    "Osun": ["Atakunmosa East", "Atakunmosa West", "Adedire", "Adewole", "Egbedore", "Ede North", "Ede South", "Ife Central", "Ife East", "Ife North", "Ife South", "Ifedayo", "Ifelodun", "Ilesa East", "Ilesa West", "Irepodun", "Irewole", "Isokan", "Iwo", "Obokun", "Odo Otin", "Ola Oluwa", "Olorunda", "Oriade", "Orolu", "Osogbo"],
+    "Oyo": ["Afijio", "Akinyele", "Atiba", "Atisbo", "Egbeda", "Ibadan North", "Ibadan North-East", "Ibadan North-West", "Ibadan South-East", "Ibadan South-West", "Ibarapa Central", "Ibarapa East", "Ibarapa North", "Ido", "Irepo", "Iseyin", "Itesiwaju", "Iwajowa", "Kajola", "Lagelu", "Ogbomoso North", "Ogbomoso South", "Ogo Oluwa", "Olorunsogo", "Oluyole", "Ona Ara", "Orelope", "Ori Ire", "Oyo East", "Oyo West", "Saki East", "Saki West", "Surulere"],
+    "Plateau": ["Bokkos", "Barkin Ladi", "Bassa", "Jos East", "Jos North", "Jos South", "Kanam", "Kanke", "Langtang South", "Langtang North", "Mangu", "Mikang", "Pankshin", "Qua'an Pan", "Riyom", "Shendam", "Wase"],
+    "Rivers": ["Abua/Odual", "Ahoada East", "Ahoada West", "Akuku-Toru", "Andoni", "Asari-Toru", "Bonny", "Degema", "Eleme", "Emuoha", "Etche", "Gokana", "Ikwerre", "Khana", "Obio/Akpor", "Oba/Egbema/Ndoni", "Ogu/Bolo", "Okrika", "Omuma", "Opobo/Nkoro", "Oyigbo", "Port Harcourt", "Tai"],
+    "Sokoto": ["Binji", "Bodinga", "Dange Shuni", "Gada", "Goronyo", "Gudu", "Gwadabawa", "Illela", "Isa", "Kebbe", "Kware", "Rabah", "Sabon Birni", "Shagari", "Silame", "Sokoto North", "Sokoto South", "Tambuwal", "Tangaza", "Tureta", "Wamako", "Wurno", "Yabo"],
+    "Taraba": ["Ardo Kola", "Bali", "Donga", "Gashaka", "Gassol", "Ibi", "Jalingo", "Karim Lamido", "Kumi", "Lau", "Sardauna", "Takum", "Ussa", "Wukari", "Yorro", "Zing"],
+    "Yobe": ["Bade", "Bursari", "Damaturu", "Fika", "Fune", "Geidam", "Gujba", "Gulani", "Jakusko", "Karasuwa", "Machina", "Nangere", "Nguru", "Potiskum", "Tarmuwa", "Yunusari", "Yusufari"],
+    "Zamfara": ["Anka", "Bakura", "Birnin Magaji/Kiyaw", "Bukkuyum", "Bungudu", "Gummi", "Gusau", "Kaura Namoda", "Maradun", "Maru", "Shinkafi", "Talata Mafara", "Chafe", "Zurmi"]
+  };
+
+  document.addEventListener('DOMContentLoaded', () => {
+    let currentCaptchaId = '';
+    let activeLeadId = '';
+
+    const captchaQuestionEl = document.getElementById('captchaQuestion');
+    const refreshCaptchaBtn = document.getElementById('refreshCaptchaBtn');
+    const step1Form = document.getElementById('leadStep1Form');
+    const step2Form = document.getElementById('leadStep2Form');
+    const step1Pane = document.getElementById('step1Pane');
+    const step2Pane = document.getElementById('step2Pane');
+    const successPane = document.getElementById('successPane');
+    const step1Indicator = document.getElementById('step1Indicator');
+    const step2Indicator = document.getElementById('step2Indicator');
+    const formAlert = document.getElementById('formAlert');
+    const crateInput = document.getElementById('quantityCrates');
+    const estEggsEl = document.getElementById('estEggs');
+    const estWeightEl = document.getElementById('estWeight');
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const deliveryStateSelect = document.getElementById('deliveryState');
+    const deliveryLGASelect = document.getElementById('deliveryLGA');
+
+    if (deliveryStateSelect) {
+      deliveryStateSelect.innerHTML = '<option value="">-- Select Destination State --</option>';
+      const stateNames = Object.keys(NIGERIA_STATES_AND_LGAS).sort();
+      stateNames.forEach(state => {
+        const option = document.createElement('option');
+        option.value = state;
+        option.textContent = state;
+        if (state === 'Lagos') option.selected = true;
+        deliveryStateSelect.appendChild(option);
+      });
+      updateLGADropdown(deliveryStateSelect.value || 'Lagos');
+      deliveryStateSelect.addEventListener('change', (e) => updateLGADropdown(e.target.value));
+    }
+
+    function updateLGADropdown(stateName) {
+      if (!deliveryLGASelect) return;
+      deliveryLGASelect.innerHTML = '<option value="">-- Select Local Government (LGA) --</option>';
+      if (stateName && NIGERIA_STATES_AND_LGAS[stateName]) {
+        const lgas = NIGERIA_STATES_AND_LGAS[stateName].sort();
+        lgas.forEach(lga => {
+          const option = document.createElement('option');
+          option.value = lga;
+          option.textContent = lga;
+          deliveryLGASelect.appendChild(option);
+        });
+        deliveryLGASelect.disabled = false;
+      } else {
+        deliveryLGASelect.disabled = true;
+      }
+    }
+
+    // Services Mobile Slider Prev/Next Controls Below Cards
+    const servicesSlider = document.getElementById('servicesSlider');
+    const sliderPrevBtn = document.getElementById('servicesSliderPrev');
+    const sliderNextBtn = document.getElementById('servicesSliderNext');
+
+    if (servicesSlider && sliderPrevBtn && sliderNextBtn) {
+      sliderPrevBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const cardWidth = servicesSlider.firstElementChild ? servicesSlider.firstElementChild.offsetWidth + 24 : 300;
+        servicesSlider.scrollBy({ left: -cardWidth, behavior: 'smooth' });
+      });
+
+      sliderNextBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const cardWidth = servicesSlider.firstElementChild ? servicesSlider.firstElementChild.offsetWidth + 24 : 300;
+        servicesSlider.scrollBy({ left: cardWidth, behavior: 'smooth' });
+      });
+    }
+
+    // Privacy & Terms Modals
+    const privacyModal = document.getElementById('privacyModal');
+    const termsModal = document.getElementById('termsModal');
+    const openPrivacyBtns = document.querySelectorAll('.open-privacy-modal');
+    const openTermsBtns = document.querySelectorAll('.open-terms-modal');
+    const closeModalBtns = document.querySelectorAll('.close-modal-btn');
+    const modalBackdrops = document.querySelectorAll('.modal-backdrop');
+
+    openPrivacyBtns.forEach(btn => btn.addEventListener('click', (e) => { e.preventDefault(); if (privacyModal) privacyModal.classList.add('active'); }));
+    openTermsBtns.forEach(btn => btn.addEventListener('click', (e) => { e.preventDefault(); if (termsModal) termsModal.classList.add('active'); }));
+    closeModalBtns.forEach(btn => btn.addEventListener('click', () => { if (privacyModal) privacyModal.classList.remove('active'); if (termsModal) termsModal.classList.remove('active'); }));
+    modalBackdrops.forEach(backdrop => backdrop.addEventListener('click', (e) => { if (e.target === backdrop) backdrop.classList.remove('active'); }));
+
+    // Mobile Menu Toggle
+    if (mobileMenuBtn && mobileMenu) {
+      mobileMenuBtn.addEventListener('click', () => {
+        const isExpanded = mobileMenuBtn.getAttribute('aria-expanded') === 'true';
+        mobileMenuBtn.setAttribute('aria-expanded', !isExpanded);
+        mobileMenu.classList.toggle('hidden');
+      });
+    }
+
+    fetchCaptcha();
+    if (refreshCaptchaBtn) refreshCaptchaBtn.addEventListener('click', (e) => { e.preventDefault(); fetchCaptcha(); });
+
+    async function fetchCaptcha() {
+      if (!captchaQuestionEl) return;
+      captchaQuestionEl.textContent = 'Loading captcha...';
+      try {
+        const res = await fetch('/processor.php?action=captcha');
+        const data = await res.json();
+        if (data.captchaId) {
+          currentCaptchaId = data.captchaId;
+          captchaQuestionEl.textContent = data.question;
+        }
+      } catch (err) {
+        captchaQuestionEl.textContent = 'Solve: 5 + 5 = ?';
+      }
+    }
+
+    function showAlert(msg, isError = true) {
+      if (!formAlert) return;
+      formAlert.classList.remove('hidden', 'bg-red-100', 'border-red-500', 'text-red-800', 'bg-emerald-100', 'border-emerald-500', 'text-emerald-800');
+      if (isError) {
+        formAlert.classList.add('bg-red-100', 'border-red-500', 'text-red-800');
+      } else {
+        formAlert.classList.add('bg-emerald-100', 'border-emerald-500', 'text-emerald-800');
+      }
+      formAlert.textContent = msg;
+      formAlert.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    function hideAlert() { if (formAlert) formAlert.classList.add('hidden'); }
+
+    if (crateInput) {
+      crateInput.addEventListener('input', () => {
+        const val = parseInt(crateInput.value, 10) || 0;
+        if (estEggsEl) estEggsEl.textContent = (val * 30).toLocaleString() + ' eggs';
+        if (estWeightEl) estWeightEl.textContent = '~' + (val * 2).toLocaleString() + ' kg';
+      });
+    }
+
+    // Step 1 Form Handler -> processor.php?action=step1
+    if (step1Form) {
+      step1Form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        hideAlert();
+        const fullName = document.getElementById('fullName').value;
+        const email = document.getElementById('email').value;
+        const phone = document.getElementById('phone').value;
+        const captchaAnswer = document.getElementById('captchaAnswer').value;
+        const submitBtn = document.getElementById('step1SubmitBtn');
+
+        if (!fullName || !email || !phone || !captchaAnswer) {
+          showAlert('Please fill in all fields including security captcha.');
+          return;
+        }
+
+        submitBtn.disabled = true;
+        const originalText = submitBtn.innerHTML;
+        submitBtn.innerHTML = 'Processing...';
+
+        try {
+          const response = await fetch('/processor.php?action=step1', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ fullName, email, phone, captchaId: currentCaptchaId, captchaAnswer })
+          });
+          const result = await response.json();
+          if (result.success) {
+            activeLeadId = result.leadId;
+            showAlert('Step 1 Saved! Contact recorded. Now select quantity & location.', false);
+            setTimeout(() => {
+              hideAlert();
+              step1Pane.classList.remove('active-pane');
+              step1Pane.classList.add('hidden-pane');
+              step2Pane.classList.remove('hidden-pane');
+              step2Pane.classList.add('active-pane');
+              if (step1Indicator && step2Indicator) {
+                step1Indicator.classList.remove('bg-blue-600', 'text-white');
+                step1Indicator.classList.add('bg-emerald-600', 'text-white');
+                step1Indicator.innerHTML = '✓';
+                step2Indicator.classList.remove('bg-slate-200', 'text-slate-600');
+                step2Indicator.classList.add('bg-blue-600', 'text-white', 'font-bold');
+              }
+              if (crateInput) crateInput.focus();
+            }, 800);
+          } else {
+            showAlert(result.message || 'Error processing request.');
+            fetchCaptcha();
+            document.getElementById('captchaAnswer').value = '';
+          }
+        } catch (err) {
+          showAlert('Network connection error. Please try again.');
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalText;
+        }
+      });
+    }
+
+    // Step 2 Form Handler -> processor.php?action=step2
+    if (step2Form) {
+      step2Form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        hideAlert();
+        const quantityCrates = document.getElementById('quantityCrates').value;
+        const deliveryState = document.getElementById('deliveryState').value;
+        const deliveryLGA = document.getElementById('deliveryLGA') ? document.getElementById('deliveryLGA').value : '';
+        const notes = document.getElementById('notes') ? document.getElementById('notes').value : '';
+        const submitBtn = document.getElementById('step2SubmitBtn');
+
+        const qty = parseInt(quantityCrates, 10);
+        if (isNaN(qty) || qty < 100) {
+          showAlert('Minimum order is 100 crates. Please enter 100 or more.');
+          return;
+        }
+        if (!deliveryState) {
+          showAlert('Please select your destination state in Nigeria.');
+          return;
+        }
+
+        submitBtn.disabled = true;
+        const originalText = submitBtn.innerHTML;
+        submitBtn.innerHTML = 'Submitting Order...';
+
+        try {
+          const response = await fetch('/processor.php?action=step2', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ leadId: activeLeadId, quantityCrates: qty, deliveryState, deliveryLGA, notes })
+          });
+          const result = await response.json();
+          if (result.success) {
+            step2Pane.classList.remove('active-pane');
+            step2Pane.classList.add('hidden-pane');
+            if (successPane) {
+              successPane.classList.remove('hidden-pane');
+              successPane.classList.add('active-pane');
+              document.getElementById('confLeadId').textContent = result.lead.id;
+              document.getElementById('confQty').textContent = result.lead.quantityCrates + ' Crates (' + (result.lead.quantityCrates * 30).toLocaleString() + ' Eggs)';
+              document.getElementById('confState').textContent = result.lead.deliveryState + (result.lead.deliveryLGA ? ' (' + result.lead.deliveryLGA + ' LGA)' : '');
+            }
+          } else {
+            showAlert(result.message || 'Error saving order details.');
+          }
+        } catch (err) {
+          showAlert('Network error. Please try submitting again.');
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalText;
+        }
+      });
+    }
+  });
+  </script>
 </body>
 </html>
