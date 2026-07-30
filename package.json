@@ -1,0 +1,22 @@
+{
+  "name": "ankabit-farm-website",
+  "version": "1.0.0",
+  "description": "Server-rendered commercial egg supply web application for Ankabit Farm, Nigeria",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "egg supply",
+    "nigeria",
+    "ankabit farm",
+    "wholesale eggs",
+    "poultry farm"
+  ],
+  "author": "Ankabit Farm",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}

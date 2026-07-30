@@ -1,0 +1,166 @@
+<?php
+// Ankabit Farm Wholesale Order Page (Server Rendered PHP)
+session_start();
+require_once __DIR__ . '/config.php';
+?>
+<!DOCTYPE html>
+<html lang="en-NG">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wholesale Egg Order | Ankabit Farm Nigeria</title>
+  <meta name="description" content="Order wholesale commercial eggs directly from Ankabit Farm. Minimum order quantity: 100 crates. Servicing Lagos, Ogun, Abuja, and nationwide.">
+  <link rel="canonical" href="https://ankabitfarm.com.ng/order">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body class="bg-[#080E1E] text-white antialiased selection:bg-blue-600 selection:text-white">
+
+  <!-- Header -->
+  <header role="banner" class="sticky top-0 z-50 bg-[#080E1E]/95 backdrop-blur-md border-b border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        <a href="/" class="flex items-center space-x-3">
+          <div class="w-10 h-10 bg-blue-600 text-white flex items-center justify-center">
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2C8 2 5 8 5 14c0 4.4 3.1 8 7 8s7-3.6 7-8c0-6-3-12-7-12zm0 18c-2.8 0-5-2.7-5-6 0-4.5 2.2-9.7 5-10.9 2.8 1.2 5 6.4 5 10.9 0 3.3-2.2 6-5 6z"/>
+            </svg>
+          </div>
+          <span class="text-2xl font-bold font-serif-heading text-white tracking-tight">AnkabitFarm</span>
+        </a>
+
+        <nav class="hidden md:flex items-center space-x-10 text-xl font-normal font-serif-heading text-slate-300">
+          <a href="/#about" class="hover:text-white">About</a>
+          <a href="/#services" class="hover:text-white">Service</a>
+          <a href="/#application-form" class="hover:text-white">Contact</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main role="main" class="py-16 min-h-screen">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-10 space-y-3">
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-normal font-serif-heading text-white">Wholesale Egg Order</h1>
+        <p class="text-base text-slate-400">Minimum Wholesale Order Quantity: <strong>100 Crates</strong> (3,000 Eggs). Step 1 captures your contact info immediately.</p>
+      </div>
+
+      <div class="p-8 sm:p-10 bg-[#0F172A] border border-slate-800 space-y-6">
+        
+        <div class="flex items-center space-x-3 pb-6 border-b border-slate-800">
+          <div class="flex items-center space-x-2">
+            <span id="step1Indicator" class="w-8 h-8 bg-blue-600 text-white flex items-center justify-center font-bold text-xs">1</span>
+            <span class="text-sm font-bold text-white">Contact & Captcha</span>
+          </div>
+          <div class="h-0.5 flex-1 bg-slate-800"></div>
+          <div class="flex items-center space-x-2">
+            <span id="step2Indicator" class="w-8 h-8 bg-slate-800 text-slate-400 flex items-center justify-center font-semibold text-xs">2</span>
+            <span class="text-sm font-semibold text-slate-400">Quantity & Destination</span>
+          </div>
+        </div>
+
+        <div id="formAlert" role="alert" aria-live="polite" class="hidden p-4 text-xs font-semibold border"></div>
+
+        <!-- STEP 1 PANE -->
+        <div id="step1Pane" class="step-pane active-pane">
+          <form id="leadStep1Form" class="space-y-5" action="/process-lead.php?action=step1" method="POST">
+            <div>
+              <label for="fullName" class="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1.5">Full Name / Business Name *</label>
+              <input type="text" id="fullName" name="fullName" required placeholder="e.g. Chief Adebayo / Sunshine Bakery" class="dark-form-input">
+            </div>
+
+            <div class="grid sm:grid-cols-2 gap-4">
+              <div>
+                <label for="email" class="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1.5">Business Email *</label>
+                <input type="email" id="email" name="email" required placeholder="e.g. adebayo@market.ng" class="dark-form-input">
+              </div>
+
+              <div>
+                <label for="phone" class="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1.5">Phone Number (WhatsApp) *</label>
+                <input type="tel" id="phone" name="phone" required placeholder="e.g. 0803 123 4567" class="dark-form-input">
+              </div>
+            </div>
+
+            <div class="p-4 bg-[#080E1E] border border-slate-800 space-y-2">
+              <div class="flex items-center justify-between">
+                <label for="captchaAnswer" class="text-xs font-bold text-blue-400 uppercase flex items-center space-x-1">
+                  <span>🔒 Security Verification:</span>
+                  <span id="captchaQuestion" class="ml-1 text-white font-mono underline">Loading...</span>
+                </label>
+                <button type="button" id="refreshCaptchaBtn" class="text-xs text-slate-400 hover:text-white underline">Refresh</button>
+              </div>
+              <input type="number" id="captchaAnswer" name="captchaAnswer" required placeholder="Enter answer" class="dark-form-input bg-[#0F172A]">
+            </div>
+
+            <button type="submit" id="step1SubmitBtn" class="w-full btn-pill-blue text-sm uppercase tracking-wider">
+              Submit Contact Info & Proceed to Quantity >
+            </button>
+          </form>
+        </div>
+
+        <!-- STEP 2 PANE -->
+        <div id="step2Pane" class="step-pane hidden-pane">
+          <form id="leadStep2Form" class="space-y-5" action="/process-lead.php?action=step2" method="POST">
+            <div>
+              <label for="quantityCrates" class="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1.5">Quantity in Crates (Minimum 100) *</label>
+              <input type="number" id="quantityCrates" name="quantityCrates" min="100" value="100" required class="dark-form-input font-bold text-xl">
+              <p class="text-xs text-blue-400 mt-1">Calculated Volume: <span id="estEggs" class="font-semibold">3,000 eggs</span> | Weight: <span id="estWeight" class="font-semibold">~200 kg</span></p>
+            </div>
+
+            <div class="grid sm:grid-cols-2 gap-4">
+              <div>
+                <label for="deliveryState" class="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1.5">Destination State *</label>
+                <select id="deliveryState" name="deliveryState" required class="dark-form-input font-medium bg-[#0F172A]">
+                  <option value="">Loading states...</option>
+                </select>
+              </div>
+
+              <div>
+                <label for="deliveryLGA" class="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1.5">Local Government (LGA) *</label>
+                <select id="deliveryLGA" name="deliveryLGA" required class="dark-form-input font-medium bg-[#0F172A]">
+                  <option value="">-- Select State First --</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label for="notes" class="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1.5">Logistics Notes</label>
+              <textarea id="notes" name="notes" rows="3" placeholder="Specify weekly schedule or size preferences..." class="dark-form-input"></textarea>
+            </div>
+
+            <button type="submit" id="step2SubmitBtn" class="w-full btn-pill-blue text-sm uppercase tracking-wider">
+              Confirm & Submit Order >
+            </button>
+          </form>
+        </div>
+
+        <!-- SUCCESS CONFIRMATION -->
+        <div id="successPane" class="step-pane hidden-pane text-center py-8 space-y-4">
+          <div class="w-16 h-16 bg-blue-600/20 text-blue-400 flex items-center justify-center mx-auto text-3xl font-bold border border-blue-500/40">✓</div>
+          <h2 class="text-3xl font-bold font-serif-heading text-white">Wholesale Order Received!</h2>
+          <p class="text-xs text-slate-300">Reference: <strong id="confLeadId" class="text-blue-400 font-mono">ABF-000</strong></p>
+          <div class="p-4 bg-slate-900 border border-slate-800 text-xs text-slate-300">
+            Order Specs: <span id="confQty" class="text-blue-400 font-bold">100 Crates</span> to <span id="confState" class="text-white font-bold">Lagos</span>.
+            Our sales dispatch unit will contact your phone shortly.
+          </div>
+          <a href="/" class="inline-block btn-pill-dark text-xs">Return to Home Page</a>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <footer class="bg-[#050914] text-white py-8 border-t border-slate-800 text-center text-xs space-y-3">
+    <div class="space-x-4 text-slate-400">
+      <a href="/privacy.php" class="hover:text-white underline font-semibold">Privacy Policy</a>
+      <span>•</span>
+      <a href="/terms.php" class="hover:text-white underline font-semibold">Terms & Conditions</a>
+    </div>
+    <p>© <?php echo date('Y'); ?> Ankabit Farm Nigeria. Minimum order quantity: 100 crates.</p>
+  </footer>
+
+  <script src="/js/nigeria-data.js"></script>
+  <script src="/js/main.js"></script>
+</body>
+</html>

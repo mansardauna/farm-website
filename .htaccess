@@ -1,0 +1,16 @@
+# Ankabit Farm Apache .htaccess Rewrite Rules for PHP
+RewriteEngine On
+RewriteBase /
+
+# Map clean API routes to PHP scripts
+RewriteRule ^api/captcha/?$ captcha.php [L,QSA]
+RewriteRule ^api/leads/step1/?$ process-lead.php?action=step1 [L,QSA]
+RewriteRule ^api/leads/step2/?$ process-lead.php?action=step2 [L,QSA]
+
+# Map clean page routes to PHP files
+RewriteRule ^order/?$ order.php [L,QSA]
+RewriteRule ^privacy/?$ privacy.php [L,QSA]
+RewriteRule ^terms/?$ terms.php [L,QSA]
+
+# Map default root to index.php
+DirectoryIndex index.php index.html

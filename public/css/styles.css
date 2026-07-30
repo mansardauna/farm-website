@@ -1,0 +1,286 @@
+/* Ankabit Farm Design System: Cormorant Garamond + DM Sans */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400;1,500&display=swap');
+
+:root {
+  --bg-canvas: #F5F7FA;
+  --bg-card: #FFFFFF;
+  --bg-dark-navy: #080E1E;
+  --bg-dark-card: #0F172A;
+  --accent-blue: #2563EB;
+  --accent-blue-hover: #1D4ED8;
+  --text-dark: #0F172A;
+  --text-muted: #64748B;
+  --border-light: #E2E8F0;
+  --border-dark: #1E293B;
+}
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background-color: var(--bg-canvas);
+  color: var(--text-dark);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+}
+
+h1, h2, h3, h4, .font-heading, .font-serif-heading {
+  font-family: 'Cormorant Garamond', serif;
+  color: var(--text-dark);
+  letter-spacing: -0.01em;
+}
+
+/* Rounded Radii for Specific Image/Featured Cards */
+.rounded-card {
+  border-radius: 20px !important;
+}
+
+.rounded-card-lg {
+  border-radius: 28px !important;
+}
+
+.rounded-img {
+  border-radius: 16px !important;
+}
+
+/* Hero Full background with Lighter Overlay */
+.hero-bg-section {
+  position: relative;
+  background-image: url('/images/hero-egg-bg.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.hero-overlay-lighter {
+  background: linear-gradient(90deg, rgba(8, 14, 30, 0.78) 0%, rgba(8, 14, 30, 0.58) 45%, rgba(8, 14, 30, 0.25) 80%, rgba(8, 14, 30, 0.10) 100%);
+}
+
+/* Primary Electric Blue Button */
+.btn-pill-blue {
+  background-color: #2563EB;
+  color: #FFFFFF;
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 0.9375rem 2rem;
+  border-radius: 4px;
+  box-shadow: none !important;
+  transition: background-color 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-pill-blue:hover {
+  background-color: #1D4ED8;
+}
+
+/* Bordered Secondary Button on Hero */
+.btn-hero-secondary {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #FFFFFF;
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 0.875rem 1.875rem;
+  border: 2px solid #FFFFFF;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-hero-secondary:hover {
+  background-color: #FFFFFF;
+  color: #0F172A;
+}
+
+.btn-pill-dark {
+  background-color: #0F172A;
+  color: #FFFFFF;
+  font-weight: 700;
+  font-size: 0.9375rem;
+  padding: 0.8125rem 1.75rem;
+  border-radius: 4px;
+  box-shadow: none !important;
+  transition: background-color 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-pill-dark:hover {
+  background-color: #1E293B;
+}
+
+.btn-pill-outline {
+  background-color: transparent;
+  color: #0F172A;
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 0.9375rem 2rem;
+  border-radius: 4px;
+  border: 2px solid #CBD5E1;
+  box-shadow: none !important;
+  transition: all 0.2s ease;
+}
+
+.btn-pill-outline:hover {
+  border-color: #0F172A;
+  background-color: #FFFFFF;
+}
+
+/* Tab Pills */
+.tab-pill {
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: #94A3B8;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  background-color: rgba(255, 255, 255, 0.05);
+  box-shadow: none !important;
+}
+
+.tab-pill.active {
+  background-color: #2563EB;
+  color: #FFFFFF;
+}
+
+/* Material UI Form Styling per Request #3 */
+.material-field-group {
+  position: relative;
+}
+
+.material-field-label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #2563EB;
+  margin-bottom: 0.375rem;
+}
+
+.material-field-input {
+  width: 100%;
+  padding: 0.875rem 1.25rem;
+  background-color: #F8FAFC;
+  border: 1px solid #CBD5E1;
+  border-radius: 4px;
+  font-size: 1rem;
+  color: #0F172A;
+  transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.material-field-input:focus {
+  outline: none;
+  background-color: #FFFFFF;
+  border-color: #2563EB;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15) !important;
+}
+
+.material-field-input::placeholder {
+  color: #94A3B8;
+}
+
+/* Auto-Scrolling Partner Logo Carousel per Request #2 */
+@keyframes infiniteLogoScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.logo-ticker-track {
+  display: flex;
+  width: max-content;
+  animation: infiniteLogoScroll 25s linear infinite;
+}
+
+.logo-ticker-track:hover {
+  animation-play-state: paused;
+}
+
+/* Services Mobile Slider */
+.slider-container {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.slider-container::-webkit-scrollbar {
+  display: none;
+}
+
+.slider-slide {
+  flex: 0 0 100%;
+  scroll-snap-align: start;
+}
+
+@media (min-width: 768px) {
+  .slider-slide {
+    flex: initial;
+  }
+}
+
+/* Modal Popup Dialogs for Terms & Privacy per Request #4 */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background-color: rgba(8, 14, 30, 0.75);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.modal-backdrop.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-box {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  max-width: 48rem;
+  width: 100%;
+  max-height: 85vh;
+  overflow-y: auto;
+  padding: 2rem;
+  transform: translateY(20px);
+  transition: transform 0.25s ease;
+}
+
+.modal-backdrop.active .modal-box {
+  transform: translateY(0);
+}
+
+/* Step Panes Transition */
+.step-pane {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.step-pane.hidden-pane {
+  display: none;
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.step-pane.active-pane {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Focus Ring */
+*:focus-visible {
+  outline: 2px solid #2563EB;
+  outline-offset: 2px;
+}
