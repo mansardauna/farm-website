@@ -304,7 +304,7 @@ button, input, select, textarea {
 /* Custom Design Tokens & Components */
 .hero-bg-section {
   background: linear-gradient(135deg, rgba(8, 14, 30, 0.45) 0%, rgba(15, 23, 42, 0.35) 100%),
-              url('/images/hero-egg-bg.png') center/cover no-repeat;
+              url('./images/hero-egg-bg.webp') center/cover no-repeat;
 }
 
 .hero-overlay-lighter {

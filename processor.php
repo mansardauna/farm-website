@@ -7,11 +7,12 @@ header('Content-Type: application/json');
 define('ADMIN_EMAIL', 'olaomansur@gmail.com');
 define('FROM_EMAIL', 'Ankabit Farm <onboarding@resend.dev>');
 define('MIN_WHOLESALE_CRATES', 100);
-define('LEADS_FILE_PATH', __DIR__ . '/data/leads.json');
+define('LEADS_FILE_PATH', __DIR__ . '/data/leads.php');
 define('RESEND_API_KEY', getenv('RESEND_API_KEY') ?: 're_123456789_your_resend_key_here');
 
 // Helper: Send Email via Resend API using PHP cURL
 function sendResendEmail($toEmail, $subject, $htmlContent) {
+    if (empty($toEmail)) return array('success' => false);
     $apiKey = RESEND_API_KEY;
     if (empty($apiKey) || strpos($apiKey, 'your_resend_key') !== false) {
         error_log("Resend API Key not set. Email logged for $toEmail: $subject");
@@ -41,20 +42,23 @@ function sendResendEmail($toEmail, $subject, $htmlContent) {
     return array('success' => ($httpCode >= 200 && $httpCode < 300));
 }
 
-// Helper: Read Saved Leads JSON
+// Helper: Read Protected Leads PHP File (Prevents Direct Web Access)
 function getSavedLeads() {
     $filePath = LEADS_FILE_PATH;
     if (!file_exists($filePath)) return array();
     $content = file_get_contents($filePath);
-    return json_decode($content, true) ?: array();
+    // Strip php die security header
+    $jsonString = preg_replace('/^\<\?php die\(.*?\);\s*\?\>/s', '', $content);
+    return json_decode(trim($jsonString), true) ?: array();
 }
 
-// Helper: Write Saved Leads JSON
+// Helper: Write Protected Leads PHP File
 function saveLeadsFile($leads) {
     $filePath = LEADS_FILE_PATH;
     $dir = dirname($filePath);
     if (!is_dir($dir)) mkdir($dir, 0755, true);
-    file_put_contents($filePath, json_encode($leads, JSON_PRETTY_PRINT));
+    $protectedContent = '<?php die("Access Denied"); ?>' . "\n" . json_encode($leads, JSON_PRETTY_PRINT);
+    file_put_contents($filePath, $protectedContent);
 }
 
 // Route Request Action
@@ -91,7 +95,7 @@ $data = json_decode($rawInput, true) ?: $_POST;
 if (!$action && isset($data['action'])) $action = $data['action'];
 
 // ----------------------------------------------------
-// ACTION 2: STEP 1 CONTACT CAPTURE
+// ACTION 2: STEP 1 CONTACT CAPTURE (Phone OR Email Required)
 // ----------------------------------------------------
 if ($action === 'step1') {
     $fullName = trim(isset($data['fullName']) ? $data['fullName'] : '');
@@ -100,8 +104,14 @@ if ($action === 'step1') {
     $captchaId = trim(isset($data['captchaId']) ? $data['captchaId'] : '');
     $captchaAnswer = trim(isset($data['captchaAnswer']) ? $data['captchaAnswer'] : '');
 
-    if (empty($fullName) || empty($email) || empty($phone) || empty($captchaAnswer)) {
-        echo json_encode(array('success' => false, 'message' => 'Please fill in all required fields including security captcha.'));
+    // Validate that AT LEAST phone or email is provided
+    if (empty($phone) && empty($email)) {
+        echo json_encode(array('success' => false, 'message' => 'Please provide at least a Phone Number or Business Email to continue.'));
+        exit;
+    }
+
+    if (empty($captchaAnswer)) {
+        echo json_encode(array('success' => false, 'message' => 'Please complete the security captcha.'));
         exit;
     }
 
@@ -124,10 +134,11 @@ if ($action === 'step1') {
 
     $leadId = 'ABF-' . strtoupper(substr(md5(uniqid()), 0, 8)) . '-' . rand(100, 999);
     $timestamp = date('c');
+    $contactLabel = !empty($phone) ? $phone : $email;
 
     $newLead = array(
         'id' => $leadId,
-        'fullName' => $fullName,
+        'fullName' => !empty($fullName) ? $fullName : 'Wholesale Prospect (' . $contactLabel . ')',
         'email' => $email,
         'phone' => $phone,
         'createdAt' => $timestamp,
@@ -146,26 +157,27 @@ if ($action === 'step1') {
     saveLeadsFile($leads);
 
     // Alert Admin (olaomansur@gmail.com) via Resend API
-    $adminSubject = "⚡ NEW LEAD STEP 1: $fullName ($leadId)";
-    $adminBody = "<h2>New Lead Contact Captured</h2>
-                  <p><strong>Name:</strong> " . htmlspecialchars($fullName) . "</p>
-                  <p><strong>Email:</strong> " . htmlspecialchars($email) . "</p>
-                  <p><strong>Phone (WhatsApp):</strong> " . htmlspecialchars($phone) . "</p>
-                  <p><strong>Reference ID:</strong> $leadId</p>";
+    $adminSubject = "⚡ NEW LEAD CONTACT: $contactLabel ($leadId)";
+    $adminBody = "<h2>New Lead Contact Captured for Sales Follow-up</h2>
+                  <p><strong>Phone:</strong> " . htmlspecialchars($phone ?: 'N/A') . "</p>
+                  <p><strong>Email:</strong> " . htmlspecialchars($email ?: 'N/A') . "</p>
+                  <p><strong>Reference ID:</strong> $leadId</p>
+                  <p><em>Contact saved to server automatically even if buyer exits before Step 2.</em></p>";
     sendResendEmail(ADMIN_EMAIL, $adminSubject, $adminBody);
 
-    // Auto-responder copy to Buyer
-    $buyerSubject = "Ankabit Farm Wholesale Inquiry Received ($leadId)";
-    $buyerBody = "<h2>Thank you for contacting Ankabit Farm</h2>
-                  <p>Dear " . htmlspecialchars($fullName) . ",</p>
-                  <p>We recorded your contact info under reference <strong>$leadId</strong>.</p>
-                  <p>Minimum order quantity is <strong>100 crates (3,000 eggs)</strong>. Our trade desk will call you shortly.</p>";
-    sendResendEmail($email, $buyerSubject, $buyerBody);
+    // Auto-responder copy to Buyer if email provided
+    if (!empty($email)) {
+        $buyerSubject = "Ankabit Farm Wholesale Inquiry Received ($leadId)";
+        $buyerBody = "<h2>Thank you for contacting Ankabit Farm</h2>
+                      <p>We recorded your contact info under reference <strong>$leadId</strong>.</p>
+                      <p>Minimum order quantity is <strong>100 crates (3,000 eggs)</strong>. Our trade desk will call you shortly.</p>";
+        sendResendEmail($email, $buyerSubject, $buyerBody);
+    }
 
     echo json_encode(array(
         'success' => true,
         'leadId' => $leadId,
-        'message' => 'Initial contact details successfully captured! Proceed to select quantity.'
+        'message' => 'Contact captured! Proceed to select quantity.'
     ));
     exit;
 }
@@ -175,6 +187,7 @@ if ($action === 'step1') {
 // ----------------------------------------------------
 if ($action === 'step2') {
     $leadId = trim(isset($data['leadId']) ? $data['leadId'] : '');
+    $fullName = trim(isset($data['fullName']) ? $data['fullName'] : '');
     $quantityCrates = (int)(isset($data['quantityCrates']) ? $data['quantityCrates'] : 0);
     $deliveryState = trim(isset($data['deliveryState']) ? $data['deliveryState'] : '');
     $deliveryLGA = trim(isset($data['deliveryLGA']) ? $data['deliveryLGA'] : '');
@@ -205,6 +218,7 @@ if ($action === 'step2') {
     }
 
     if ($targetIndex !== -1) {
+        if (!empty($fullName)) $leads[$targetIndex]['fullName'] = $fullName;
         $leads[$targetIndex]['quantityCrates'] = $quantityCrates;
         $leads[$targetIndex]['deliveryState'] = $deliveryState;
         $leads[$targetIndex]['deliveryLGA'] = $deliveryLGA;
@@ -224,19 +238,21 @@ if ($action === 'step2') {
         $adminBody = "<h2>Wholesale Egg Order Request Complete</h2>
                       <p><strong>Lead ID:</strong> {$updatedLead['id']}</p>
                       <p><strong>Customer Name:</strong> " . htmlspecialchars($updatedLead['fullName']) . "</p>
-                      <p><strong>Email:</strong> " . htmlspecialchars($updatedLead['email']) . "</p>
-                      <p><strong>Phone:</strong> " . htmlspecialchars($updatedLead['phone']) . "</p>
+                      <p><strong>Email:</strong> " . htmlspecialchars($updatedLead['email'] ?: 'N/A') . "</p>
+                      <p><strong>Phone:</strong> " . htmlspecialchars($updatedLead['phone'] ?: 'N/A') . "</p>
                       <p><strong>Order Quantity:</strong> $quantityCrates Crates ($eggCount Eggs, ~$weightKg kg)</p>
                       <p><strong>Destination:</strong> " . htmlspecialchars($deliveryState) . " (" . htmlspecialchars($deliveryLGA) . " LGA)</p>
                       <p><strong>Logistics Notes:</strong> " . htmlspecialchars($notes) . "</p>";
         sendResendEmail(ADMIN_EMAIL, $adminSubject, $adminBody);
 
-        // Send Order Receipt to Buyer
-        $buyerSubject = "Ankabit Farm Order Specification Receipt ({$updatedLead['id']})";
-        $buyerBody = "<h2>Order Specification Received</h2>
-                      <p>Dear " . htmlspecialchars($updatedLead['fullName']) . ",</p>
-                      <p>Your wholesale order inquiry for <strong>$quantityCrates Crates ($eggCount eggs)</strong> to <strong>" . htmlspecialchars($deliveryState) . "</strong> has been logged under ID <strong>{$updatedLead['id']}</strong>.</p>";
-        sendResendEmail($updatedLead['email'], $buyerSubject, $buyerBody);
+        // Send Order Receipt to Buyer if email provided
+        if (!empty($updatedLead['email'])) {
+            $buyerSubject = "Ankabit Farm Order Specification Receipt ({$updatedLead['id']})";
+            $buyerBody = "<h2>Order Specification Received</h2>
+                          <p>Dear " . htmlspecialchars($updatedLead['fullName']) . ",</p>
+                          <p>Your wholesale order inquiry for <strong>$quantityCrates Crates ($eggCount eggs)</strong> to <strong>" . htmlspecialchars($deliveryState) . "</strong> has been logged under ID <strong>{$updatedLead['id']}</strong>.</p>";
+            sendResendEmail($updatedLead['email'], $buyerSubject, $buyerBody);
+        }
 
         echo json_encode(array(
             'success' => true,

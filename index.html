@@ -19,8 +19,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <!-- 100% PURE VANILLA CSS EXTERNAL STYLESHEET -->
-  <link rel="stylesheet" href="/style.css">
+  <!-- 100% PURE VANILLA CSS RELATIVE STYLESHEET -->
+  <link rel="stylesheet" href="./style.css">
 
   <!-- Structured Data SEO -->
   <script type="application/ld+json">
@@ -52,7 +52,7 @@
       <div class="flex items-center justify-between h-20">
         
         <!-- Brand Logo -->
-        <a href="/" class="flex items-center space-x-3" aria-label="Ankabit Farm Homepage">
+        <a href="./" class="flex items-center space-x-3" aria-label="Ankabit Farm Homepage">
           <div class="w-10 h-10 bg-blue-600 text-white flex items-center justify-center">
             <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               <path d="M12 2C8 2 5 8 5 14c0 4.4 3.1 8 7 8s7-3.6 7-8c0-6-3-12-7-12zm0 18c-2.8 0-5-2.7-5-6 0-4.5 2.2-9.7 5-10.9 2.8 1.2 5 6.4 5 10.9 0 3.3-2.2 6-5 6z"/>
@@ -197,9 +197,10 @@
             </div>
           </div>
 
+          <!-- Unbranded African Male Agribusiness Logistics Manager Photo -->
           <div class="lg:col-span-6">
             <div class="relative rounded-card-lg overflow-hidden border border-slate-200 h-full min-h-[420px] bg-slate-900">
-              <img src="/images/farm-distributor.png" alt="Ankabit Agribusiness Manager inspecting commercial egg dispatch" class="w-full h-full object-cover opacity-95">
+              <img src="./images/farm-distributor.webp" alt="African Agribusiness Logistics Manager inspecting commercial egg crates" class="w-full h-full object-cover opacity-95">
               
               <div class="absolute bottom-6 left-6 right-6 p-6 bg-white/95 backdrop-blur-md border border-slate-200 space-y-3">
                 <blockquote class="text-base sm:text-lg font-medium text-slate-900 italic font-serif-heading">
@@ -325,7 +326,7 @@
       </div>
     </section>
 
-    <!-- SECTION 5: CONTACT LEAD FORM (MATERIAL UI FORMAT) -->
+    <!-- SECTION 5: CONTACT LEAD FORM (MINIMALIST STEP 1 VIEW) -->
     <section id="application-form" class="py-20 bg-[#F5F7FA] text-slate-900 border-t border-slate-200" aria-labelledby="contact-heading">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid lg:grid-cols-12 gap-12 items-start">
@@ -365,7 +366,7 @@
               <div class="flex items-center space-x-3">
                 <div class="flex items-center space-x-2">
                   <span id="step1Indicator" class="w-8 h-8 bg-blue-600 text-white flex items-center justify-center text-xs font-bold">1</span>
-                  <span class="text-sm font-bold text-slate-900">Contact & Captcha</span>
+                  <span class="text-sm font-bold text-slate-900">Contact Details</span>
                 </div>
                 <div class="h-0.5 flex-1 bg-slate-200"></div>
                 <div class="flex items-center space-x-2">
@@ -376,23 +377,20 @@
 
               <div id="formAlert" role="alert" aria-live="polite" class="hidden p-4 text-xs font-bold border"></div>
 
-              <!-- STEP 1 PANE -->
+              <!-- STEP 1 PANE (MINIMALIST: PHONE OR EMAIL REQUIRED) -->
               <div id="step1Pane" class="step-pane active-pane">
                 <form id="leadStep1Form" class="space-y-5">
-                  <div class="material-field-group">
-                    <label for="fullName" class="material-field-label">Full Name / Business Name *</label>
-                    <input type="text" id="fullName" required placeholder="e.g. Chief Adebayo / Sunshine Bakery" class="material-field-input">
-                  </div>
+                  <p class="text-xs text-slate-500 font-semibold mb-2">Enter your Phone Number or Email below to get started. Your contact will be saved automatically for sales follow-up.</p>
 
                   <div class="grid sm:grid-cols-2 gap-4">
                     <div class="material-field-group">
-                      <label for="email" class="material-field-label">Business Email *</label>
-                      <input type="email" id="email" required placeholder="e.g. adebayo@market.ng" class="material-field-input">
+                      <label for="phone" class="material-field-label">Phone Number (WhatsApp)</label>
+                      <input type="tel" id="phone" placeholder="e.g. 0803 123 4567" class="material-field-input">
                     </div>
 
                     <div class="material-field-group">
-                      <label for="phone" class="material-field-label">Phone Number (WhatsApp) *</label>
-                      <input type="tel" id="phone" required placeholder="e.g. 0803 123 4567" class="material-field-input">
+                      <label for="email" class="material-field-label">Business Email</label>
+                      <input type="email" id="email" placeholder="e.g. adebayo@market.ng" class="material-field-input">
                     </div>
                   </div>
 
@@ -408,7 +406,7 @@
                   </div>
 
                   <button type="submit" id="step1SubmitBtn" class="w-full btn-pill-blue text-sm uppercase tracking-wider">
-                    Submit Contact & Select Quantity >
+                    Continue to Order Quantity >
                   </button>
                 </form>
               </div>
@@ -417,7 +415,12 @@
               <div id="step2Pane" class="step-pane hidden-pane">
                 <form id="leadStep2Form" class="space-y-5">
                   <div class="p-3 bg-blue-50 border border-blue-200 text-blue-700 text-xs font-bold">
-                    ✓ Contact saved! Now select order quantity & destination state/LGA.
+                    ✓ Contact saved! Now specify full name, order quantity & destination state/LGA.
+                  </div>
+
+                  <div class="material-field-group">
+                    <label for="fullName" class="material-field-label">Full Name / Business Name *</label>
+                    <input type="text" id="fullName" required placeholder="e.g. Chief Adebayo / Sunshine Bakery" class="material-field-input">
                   </div>
 
                   <div class="material-field-group">
@@ -448,7 +451,7 @@
                   </div>
 
                   <button type="submit" id="step2SubmitBtn" class="w-full btn-pill-blue text-sm uppercase tracking-wider">
-                    Submit Order Inquiry >
+                    Submit Complete Order Inquiry >
                   </button>
                 </form>
               </div>
@@ -598,7 +601,7 @@
 
       <div class="space-y-4 text-sm leading-relaxed">
         <p><strong>Effective Date:</strong> July 30, 2026 | NDPR & Data Protection Compliant</p>
-        <p>At <strong>Ankabit Farm</strong>, protecting your commercial trade data is paramount. When submitting wholesale egg supply inquiries, our system records your Step 1 contact information (Full Name, Business Email, WhatsApp Phone Number) immediately to ensure our sales desk can contact you even if your connection drops.</p>
+        <p>At <strong>Ankabit Farm</strong>, protecting your commercial trade data is paramount. When submitting wholesale egg supply inquiries, our system records your Step 1 contact information (Phone Number or Business Email) immediately to ensure our sales desk can contact you even if your connection drops.</p>
         <p>Contact Email: <a href="mailto:olaomansur@gmail.com" class="text-blue-600 font-bold underline">olaomansur@gmail.com</a></p>
       </div>
 
@@ -770,7 +773,7 @@
       if (!captchaQuestionEl) return;
       captchaQuestionEl.textContent = 'Loading captcha...';
       try {
-        const res = await fetch('/processor.php?action=captcha');
+        const res = await fetch('./processor.php?action=captcha');
         const data = await res.json();
         if (data.captchaId) {
           currentCaptchaId = data.captchaId;
@@ -798,36 +801,40 @@
       });
     }
 
-    // Step 1 Form Handler -> processor.php?action=step1
+    // Step 1 Form Handler -> ./processor.php?action=step1 (Phone OR Email Required)
     if (step1Form) {
       step1Form.addEventListener('submit', async (e) => {
         e.preventDefault();
         hideAlert();
-        const fullName = document.getElementById('fullName').value;
-        const email = document.getElementById('email').value;
-        const phone = document.getElementById('phone').value;
-        const captchaAnswer = document.getElementById('captchaAnswer').value;
+        const phone = document.getElementById('phone').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const captchaAnswer = document.getElementById('captchaAnswer').value.trim();
         const submitBtn = document.getElementById('step1SubmitBtn');
 
-        if (!fullName || !email || !phone || !captchaAnswer) {
-          showAlert('Please fill in all fields including security captcha.');
+        if (!phone && !email) {
+          showAlert('Please enter at least your Phone Number or Business Email to continue.');
+          return;
+        }
+
+        if (!captchaAnswer) {
+          showAlert('Please complete the security captcha.');
           return;
         }
 
         submitBtn.disabled = true;
         const originalText = submitBtn.innerHTML;
-        submitBtn.innerHTML = 'Processing...';
+        submitBtn.innerHTML = 'Saving Contact...';
 
         try {
-          const response = await fetch('/processor.php?action=step1', {
+          const response = await fetch('./processor.php?action=step1', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ fullName, email, phone, captchaId: currentCaptchaId, captchaAnswer })
+            body: JSON.stringify({ phone, email, captchaId: currentCaptchaId, captchaAnswer })
           });
           const result = await response.json();
           if (result.success) {
             activeLeadId = result.leadId;
-            showAlert('Step 1 Saved! Contact recorded. Now select quantity & location.', false);
+            showAlert('Contact saved to server! Now specify order quantity & location.', false);
             setTimeout(() => {
               hideAlert();
               step1Pane.classList.remove('active-pane');
@@ -841,7 +848,8 @@
                 step2Indicator.classList.remove('bg-slate-200', 'text-slate-600');
                 step2Indicator.classList.add('bg-blue-600', 'text-white', 'font-bold');
               }
-              if (crateInput) crateInput.focus();
+              const fullNameInput = document.getElementById('fullName');
+              if (fullNameInput) fullNameInput.focus();
             }, 800);
           } else {
             showAlert(result.message || 'Error processing request.');
@@ -857,11 +865,12 @@
       });
     }
 
-    // Step 2 Form Handler -> processor.php?action=step2
+    // Step 2 Form Handler -> ./processor.php?action=step2
     if (step2Form) {
       step2Form.addEventListener('submit', async (e) => {
         e.preventDefault();
         hideAlert();
+        const fullName = document.getElementById('fullName').value.trim();
         const quantityCrates = document.getElementById('quantityCrates').value;
         const deliveryState = document.getElementById('deliveryState').value;
         const deliveryLGA = document.getElementById('deliveryLGA') ? document.getElementById('deliveryLGA').value : '';
@@ -883,10 +892,10 @@
         submitBtn.innerHTML = 'Submitting Order...';
 
         try {
-          const response = await fetch('/processor.php?action=step2', {
+          const response = await fetch('./processor.php?action=step2', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ leadId: activeLeadId, quantityCrates: qty, deliveryState, deliveryLGA, notes })
+            body: JSON.stringify({ leadId: activeLeadId, fullName, quantityCrates: qty, deliveryState, deliveryLGA, notes })
           });
           const result = await response.json();
           if (result.success) {
