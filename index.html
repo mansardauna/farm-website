@@ -854,23 +854,25 @@
           const result = await response.json();
           if (result.success) {
             activeLeadId = result.leadId;
-            showAlert('Contact saved to server! Now specify order quantity & location.', false);
+            hideAlert();
+            step1Pane.classList.remove('active-pane');
+            step1Pane.classList.add('hidden-pane');
+            step2Pane.classList.remove('hidden-pane');
+            step2Pane.classList.add('active-pane');
+            
+            if (step1Indicator && step2Indicator) {
+              step1Indicator.classList.remove('bg-blue-600', 'text-white');
+              step1Indicator.classList.add('bg-emerald-600', 'text-white');
+              step1Indicator.innerHTML = '✓';
+              step2Indicator.classList.remove('bg-slate-200', 'text-slate-600');
+              step2Indicator.classList.add('bg-blue-600', 'text-white', 'font-bold');
+            }
+
+            step2Pane.scrollIntoView({ behavior: 'smooth', block: 'start' });
             setTimeout(() => {
-              hideAlert();
-              step1Pane.classList.remove('active-pane');
-              step1Pane.classList.add('hidden-pane');
-              step2Pane.classList.remove('hidden-pane');
-              step2Pane.classList.add('active-pane');
-              if (step1Indicator && step2Indicator) {
-                step1Indicator.classList.remove('bg-blue-600', 'text-white');
-                step1Indicator.classList.add('bg-emerald-600', 'text-white');
-                step1Indicator.innerHTML = '✓';
-                step2Indicator.classList.remove('bg-slate-200', 'text-slate-600');
-                step2Indicator.classList.add('bg-blue-600', 'text-white', 'font-bold');
-              }
               const fullNameInput = document.getElementById('fullName');
               if (fullNameInput) fullNameInput.focus();
-            }, 800);
+            }, 100);
           } else {
             showAlert(result.message || 'Error processing request.');
             fetchCaptcha();

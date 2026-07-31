@@ -29,5 +29,20 @@
         "deliveryLGA": null,
         "notes": null,
         "status": "STEP1_CONTACT_CAPTURED"
+    },
+    {
+        "id": "ABF-E13A4C15-722",
+        "fullName": "Wholesale Prospect (678987654)",
+        "email": "O@DD.DJ",
+        "phone": "678987654",
+        "createdAt": "2026-07-31T08:27:14+02:00",
+        "updatedAt": "2026-07-31T08:27:14+02:00",
+        "step1Completed": true,
+        "step2Completed": false,
+        "quantityCrates": null,
+        "deliveryState": null,
+        "deliveryLGA": null,
+        "notes": null,
+        "status": "STEP1_CONTACT_CAPTURED"
     }
 ]
