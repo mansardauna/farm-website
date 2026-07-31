@@ -766,6 +766,14 @@
       });
     }
 
+    // Smart API Endpoint Resolver (Prevents 405 Method Not Allowed on static dev servers like live-server port 8080)
+    function getApiEndpoint(actionQuery) {
+      if (window.location.port === '8080' || window.location.port === '5500' || window.location.port === '3000') {
+        return 'http://localhost:8000/processor.php?' + actionQuery;
+      }
+      return './processor.php?' + actionQuery;
+    }
+
     fetchCaptcha();
     if (refreshCaptchaBtn) refreshCaptchaBtn.addEventListener('click', (e) => { e.preventDefault(); fetchCaptcha(); });
 
@@ -773,8 +781,8 @@
       if (!captchaQuestionEl) return;
       captchaQuestionEl.textContent = 'Loading captcha...';
       try {
-        const res = await fetch('./processor.php?action=captcha');
-        const data = await res.json();
+        let res = await fetch(getApiEndpoint('action=captcha'));
+        let data = await res.json();
         if (data.captchaId) {
           currentCaptchaId = data.captchaId;
           captchaQuestionEl.textContent = data.question;
@@ -801,7 +809,7 @@
       });
     }
 
-    // Step 1 Form Handler -> ./processor.php?action=step1 (Phone OR Email Required)
+    // Step 1 Form Handler -> getApiEndpoint('action=step1') (Phone OR Email Required)
     if (step1Form) {
       step1Form.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -826,11 +834,23 @@
         submitBtn.innerHTML = 'Saving Contact...';
 
         try {
-          const response = await fetch('./processor.php?action=step1', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ phone, email, captchaId: currentCaptchaId, captchaAnswer })
-          });
+          let endpoint = getApiEndpoint('action=step1');
+          let response;
+          try {
+            response = await fetch(endpoint, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ phone, email, captchaId: currentCaptchaId, captchaAnswer })
+            });
+          } catch (fetchErr) {
+            // Fallback if port 8080 failed
+            response = await fetch('http://localhost:8000/processor.php?action=step1', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ phone, email, captchaId: currentCaptchaId, captchaAnswer })
+            });
+          }
+
           const result = await response.json();
           if (result.success) {
             activeLeadId = result.leadId;
@@ -865,7 +885,7 @@
       });
     }
 
-    // Step 2 Form Handler -> ./processor.php?action=step2
+    // Step 2 Form Handler -> getApiEndpoint('action=step2')
     if (step2Form) {
       step2Form.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -892,11 +912,22 @@
         submitBtn.innerHTML = 'Submitting Order...';
 
         try {
-          const response = await fetch('./processor.php?action=step2', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ leadId: activeLeadId, fullName, quantityCrates: qty, deliveryState, deliveryLGA, notes })
-          });
+          let endpoint = getApiEndpoint('action=step2');
+          let response;
+          try {
+            response = await fetch(endpoint, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ leadId: activeLeadId, fullName, quantityCrates: qty, deliveryState, deliveryLGA, notes })
+            });
+          } catch (fetchErr) {
+            response = await fetch('http://localhost:8000/processor.php?action=step2', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ leadId: activeLeadId, fullName, quantityCrates: qty, deliveryState, deliveryLGA, notes })
+            });
+          }
+
           const result = await response.json();
           if (result.success) {
             step2Pane.classList.remove('active-pane');

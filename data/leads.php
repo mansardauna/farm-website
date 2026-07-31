@@ -14,5 +14,20 @@
         "deliveryLGA": null,
         "notes": null,
         "status": "STEP1_CONTACT_CAPTURED"
+    },
+    {
+        "id": "ABF-4CA1FD1D-118",
+        "fullName": "Wholesale Prospect (08039998877)",
+        "email": "ola@farm.ng",
+        "phone": "08039998877",
+        "createdAt": "2026-07-31T08:21:06+02:00",
+        "updatedAt": "2026-07-31T08:21:06+02:00",
+        "step1Completed": true,
+        "step2Completed": false,
+        "quantityCrates": null,
+        "deliveryState": null,
+        "deliveryLGA": null,
+        "notes": null,
+        "status": "STEP1_CONTACT_CAPTURED"
     }
 ]
