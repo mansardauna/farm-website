@@ -61,7 +61,7 @@
           <span class="text-2xl font-bold font-serif-heading text-slate-900 tracking-tight">AnkabitFarm</span>
         </a>
 
-        <!-- Center Navigation (Nav items in header font, NOT bold: About, Service, Contact alone) -->
+        <!-- Center Navigation -->
         <nav role="navigation" aria-label="Main Navigation" class="hidden md:flex items-center space-x-10 text-xl font-normal font-serif-heading text-slate-700">
           <a href="#about" class="hover:text-slate-900 transition-colors">About</a>
           <a href="#services" class="hover:text-slate-900 transition-colors">Service</a>
@@ -202,7 +202,8 @@
             <div class="relative rounded-card-lg overflow-hidden border border-slate-200 h-full min-h-[420px] bg-slate-900">
               <img src="./images/farm-distributor.webp" alt="African Agribusiness Logistics Manager inspecting commercial egg crates" class="w-full h-full object-cover opacity-95">
               
-              <div class="absolute bottom-6 left-6 right-6 p-6 bg-white/95 backdrop-blur-md border border-slate-200 space-y-3">
+              <!-- Clean Solid White Background Card per User Request -->
+              <div class="absolute bottom-6 left-6 right-6 p-6 bg-white border border-slate-200 shadow-xl space-y-3">
                 <blockquote class="text-base sm:text-lg font-medium text-slate-900 italic font-serif-heading">
                   "Egg distribution is only invisible when it works perfectly. That's what we're here to deliver."
                 </blockquote>
@@ -222,7 +223,7 @@
       </div>
     </section>
 
-    <!-- SECTION 3: WHOLESALE QUALIFICATION -->
+    <!-- SECTION 3: WHOLESALE QUALIFICATION (ACTIVE INTERACTIVE TABS) -->
     <section id="trade-accounts" class="py-20 bg-[#080E1E] text-white" aria-labelledby="qualification-heading">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
         
@@ -232,33 +233,35 @@
           </h2>
         </div>
 
-        <div class="flex flex-wrap items-center justify-center gap-3">
-          <button class="tab-pill active">Wholesale Merchants (100+ Crates)</button>
-          <button class="tab-pill">Supermarket & Retail Chains</button>
-          <button class="tab-pill">Hotels & Restaurants</button>
-          <button class="tab-pill">Bakeries & Confectioners</button>
+        <!-- Interactive Category Switcher Tabs -->
+        <div id="qualificationTabs" class="flex flex-wrap items-center justify-center gap-3">
+          <button data-tab="0" class="tab-pill active">Wholesale Merchants (100+ Crates)</button>
+          <button data-tab="1" class="tab-pill">Supermarket & Retail Chains</button>
+          <button data-tab="2" class="tab-pill">Hotels & Restaurants</button>
+          <button data-tab="3" class="tab-pill">Bakeries & Confectioners</button>
         </div>
 
-        <div class="max-w-4xl mx-auto p-8 sm:p-12 bg-blue-600 space-y-8 text-white">
+        <!-- Dynamic Content Card -->
+        <div id="qualificationCard" class="max-w-4xl mx-auto p-8 sm:p-12 bg-blue-600 space-y-8 text-white transition-all duration-300">
           <div class="space-y-3">
-            <h3 class="text-3xl font-bold font-serif-heading">Wholesale Merchants & Distributors</h3>
-            <p class="text-base text-blue-100 max-w-2xl leading-relaxed">
+            <h3 id="tabTitle" class="text-3xl font-bold font-serif-heading">Wholesale Merchants & Distributors</h3>
+            <p id="tabDesc" class="text-base text-blue-100 max-w-2xl leading-relaxed">
               Regional egg distributors, wholesale market traders, and commercial logistics buyers purchasing minimum 100 crates weekly.
             </p>
           </div>
 
           <div class="grid sm:grid-cols-3 gap-6 pt-4 border-t border-blue-500/40 text-sm">
             <div class="space-y-1.5">
-              <span class="font-bold text-white block">• Bulk Crate Volume</span>
-              <span class="text-blue-100">100 to 5,000+ crates per dispatch</span>
+              <span id="spec1Title" class="font-bold text-white block">• Bulk Crate Volume</span>
+              <span id="spec1Desc" class="text-blue-100">100 to 5,000+ crates per dispatch</span>
             </div>
             <div class="space-y-1.5">
-              <span class="font-bold text-white block">• Direct Truck Loading</span>
-              <span class="text-blue-100">Priority farm-gate dispatch</span>
+              <span id="spec2Title" class="font-bold text-white block">• Direct Truck Loading</span>
+              <span id="spec2Desc" class="text-blue-100">Priority farm-gate dispatch</span>
             </div>
             <div class="space-y-1.5">
-              <span class="font-bold text-white block">• Tiered Pricing</span>
-              <span class="text-blue-100">Protected B2B margin rates</span>
+              <span id="spec3Title" class="font-bold text-white block">• Tiered Pricing</span>
+              <span id="spec3Desc" class="text-blue-100">Protected B2B margin rates</span>
             </div>
           </div>
 
@@ -326,7 +329,7 @@
       </div>
     </section>
 
-    <!-- SECTION 5: CONTACT LEAD FORM (MINIMALIST STEP 1 VIEW) -->
+    <!-- SECTION 5: CONTACT LEAD FORM -->
     <section id="application-form" class="py-20 bg-[#F5F7FA] text-slate-900 border-t border-slate-200" aria-labelledby="contact-heading">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid lg:grid-cols-12 gap-12 items-start">
@@ -377,7 +380,7 @@
 
               <div id="formAlert" role="alert" aria-live="polite" class="hidden p-4 text-xs font-bold border"></div>
 
-              <!-- STEP 1 PANE (MINIMALIST: PHONE OR EMAIL REQUIRED) -->
+              <!-- STEP 1 PANE -->
               <div id="step1Pane" class="step-pane active-pane">
                 <form id="leadStep1Form" class="space-y-5">
                   <p class="text-xs text-slate-500 font-semibold mb-2">Enter your Phone Number or Email below to get started. Your contact will be saved automatically for sales follow-up.</p>
@@ -672,6 +675,38 @@
     "Zamfara": ["Anka", "Bakura", "Birnin Magaji/Kiyaw", "Bukkuyum", "Bungudu", "Gummi", "Gusau", "Kaura Namoda", "Maradun", "Maru", "Shinkafi", "Talata Mafara", "Chafe", "Zurmi"]
   };
 
+  // Dataset for Interactive Who Qualifies Tabs
+  const WHOLESALE_TABS_DATA = [
+    {
+      title: "Wholesale Merchants & Distributors",
+      description: "Regional egg distributors, wholesale market traders, and commercial logistics buyers purchasing minimum 100 crates weekly.",
+      spec1Title: "• Bulk Crate Volume", spec1Desc: "100 to 5,000+ crates per dispatch",
+      spec2Title: "• Direct Truck Loading", spec2Desc: "Priority farm-gate dispatch",
+      spec3Title: "• Tiered Pricing", spec3Desc: "Protected B2B margin rates"
+    },
+    {
+      title: "Supermarket & Hypermarket Chains",
+      description: "Retail grocery chains requiring scheduled, graded, shrink-wrapped 30-egg crates delivered directly to regional distribution centers.",
+      spec1Title: "• Grade-A Inspection", spec1Desc: "Uniform egg sizing & shell clarity",
+      spec2Title: "• Scheduled Deliveries", spec2Desc: "Weekly or bi-weekly DC restocking",
+      spec3Title: "• Barcode Compliance", spec3Desc: "Retail-ready packaging options"
+    },
+    {
+      title: "Hotels & Luxury Hospitality Networks",
+      description: "High-volume commercial kitchens, hotel buffets, and resort catering groups needing fresh farm-gate eggs on standing weekly orders.",
+      spec1Title: "• Freshness Guarantee", spec1Desc: "Direct farm-to-kitchen supply line",
+      spec2Title: "• Flexible Cadence", spec2Desc: "Standing order scheduling with zero break",
+      spec3Title: "• Quality Assurance", spec3Desc: "Clean, biosecure certified layers"
+    },
+    {
+      title: "Bakeries & Industrial Food Manufacturers",
+      description: "Industrial bakeries and food processors requiring consistent egg weight and shell integrity for precision commercial batch baking.",
+      spec1Title: "• Uniform Weight", spec1Desc: "Consistent liquid egg mass per crate",
+      spec2Title: "• High Shell Integrity", spec2Desc: "Reduced breakage during automated cracking",
+      spec3Title: "• Bulk Volume Pricing", spec3Desc: "Direct volume discounts for daily baking runs"
+    }
+  ];
+
   document.addEventListener('DOMContentLoaded', () => {
     let currentCaptchaId = '';
     let activeLeadId = '';
@@ -693,6 +728,38 @@
     const mobileMenu = document.getElementById('mobileMenu');
     const deliveryStateSelect = document.getElementById('deliveryState');
     const deliveryLGASelect = document.getElementById('deliveryLGA');
+
+    // Interactive Qualification Tabs Switching
+    const tabButtons = document.querySelectorAll('#qualificationTabs button');
+    const tabTitleEl = document.getElementById('tabTitle');
+    const tabDescEl = document.getElementById('tabDesc');
+    const spec1TitleEl = document.getElementById('spec1Title');
+    const spec1DescEl = document.getElementById('spec1Desc');
+    const spec2TitleEl = document.getElementById('spec2Title');
+    const spec2DescEl = document.getElementById('spec2Desc');
+    const spec3TitleEl = document.getElementById('spec3Title');
+    const spec3DescEl = document.getElementById('spec3Desc');
+
+    if (tabButtons.length > 0) {
+      tabButtons.forEach((btn, index) => {
+        btn.addEventListener('click', () => {
+          tabButtons.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+
+          const data = WHOLESALE_TABS_DATA[index];
+          if (data && tabTitleEl) {
+            tabTitleEl.textContent = data.title;
+            tabDescEl.textContent = data.description;
+            spec1TitleEl.textContent = data.spec1Title;
+            spec1DescEl.textContent = data.spec1Desc;
+            spec2TitleEl.textContent = data.spec2Title;
+            spec2DescEl.textContent = data.spec2Desc;
+            spec3TitleEl.textContent = data.spec3Title;
+            spec3DescEl.textContent = data.spec3Desc;
+          }
+        });
+      });
+    }
 
     if (deliveryStateSelect) {
       deliveryStateSelect.innerHTML = '<option value="">-- Select Destination State --</option>';
@@ -725,7 +792,7 @@
       }
     }
 
-    // Services Mobile Slider Prev/Next Controls Below Cards
+    // Services Mobile Slider Controls
     const servicesSlider = document.getElementById('servicesSlider');
     const sliderPrevBtn = document.getElementById('servicesSliderPrev');
     const sliderNextBtn = document.getElementById('servicesSliderNext');
@@ -843,7 +910,6 @@
               body: JSON.stringify({ phone, email, captchaId: currentCaptchaId, captchaAnswer })
             });
           } catch (fetchErr) {
-            // Fallback if port 8080 failed
             response = await fetch('http://localhost:8000/processor.php?action=step1', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
