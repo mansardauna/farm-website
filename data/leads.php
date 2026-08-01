@@ -44,5 +44,20 @@
         "deliveryLGA": null,
         "notes": null,
         "status": "STEP1_CONTACT_CAPTURED"
+    },
+    {
+        "id": "ABF-06C0BBEF-380",
+        "fullName": "Lagos Agro Merchant",
+        "email": "buyer@b2b.ng",
+        "phone": "08055544332",
+        "createdAt": "2026-08-01T15:09:52+02:00",
+        "updatedAt": "2026-08-01T15:09:52+02:00",
+        "step1Completed": true,
+        "step2Completed": true,
+        "quantityCrates": 150,
+        "deliveryState": "Lagos",
+        "deliveryLGA": "Ikeja",
+        "notes": "",
+        "status": "WHOLESALE_ORDER_COMPLETED"
     }
 ]

@@ -380,7 +380,7 @@
 
               <div id="formAlert" role="alert" aria-live="polite" class="hidden p-4 text-xs font-bold border"></div>
 
-              <!-- STEP 1 PANE -->
+              <!-- STEP 1 PANE (FAST CONTACT CAPTURE: PHONE OR EMAIL REQUIRED, NO CAPTCHA) -->
               <div id="step1Pane" class="step-pane active-pane">
                 <form id="leadStep1Form" class="space-y-5">
                   <p class="text-xs text-slate-500 font-semibold mb-2">Enter your Phone Number or Email below to get started. Your contact will be saved automatically for sales follow-up.</p>
@@ -397,24 +397,13 @@
                     </div>
                   </div>
 
-                  <div class="p-4 bg-slate-50 border border-slate-200 space-y-2">
-                    <div class="flex items-center justify-between">
-                      <label for="captchaAnswer" class="text-xs font-bold text-blue-600 uppercase flex items-center space-x-1">
-                        <span>🔒 Security Verification:</span>
-                        <span id="captchaQuestion" class="ml-1 text-slate-900 font-mono underline">Loading...</span>
-                      </label>
-                      <button type="button" id="refreshCaptchaBtn" class="text-xs text-slate-600 hover:text-slate-900 underline">Refresh</button>
-                    </div>
-                    <input type="number" id="captchaAnswer" required placeholder="Enter answer" class="material-field-input bg-white">
-                  </div>
-
                   <button type="submit" id="step1SubmitBtn" class="w-full btn-pill-blue text-sm uppercase tracking-wider">
                     Continue to Order Quantity >
                   </button>
                 </form>
               </div>
 
-              <!-- STEP 2 PANE -->
+              <!-- STEP 2 PANE (ORDER DETAILS + SECURITY CAPTCHA) -->
               <div id="step2Pane" class="step-pane hidden-pane">
                 <form id="leadStep2Form" class="space-y-5">
                   <div class="p-3 bg-blue-50 border border-blue-200 text-blue-700 text-xs font-bold">
@@ -451,6 +440,18 @@
                   <div class="material-field-group">
                     <label for="notes" class="material-field-label">Logistics / Landmark Notes</label>
                     <textarea id="notes" rows="3" placeholder="Specify landmark market or delivery schedule..." class="material-field-input"></textarea>
+                  </div>
+
+                  <!-- SECURITY CAPTCHA RELOCATED TO STEP 2 PER USER REQUEST -->
+                  <div class="p-4 bg-slate-50 border border-slate-200 space-y-2">
+                    <div class="flex items-center justify-between">
+                      <label for="captchaAnswer" class="text-xs font-bold text-blue-600 uppercase flex items-center space-x-1">
+                        <span>🔒 Security Verification:</span>
+                        <span id="captchaQuestion" class="ml-1 text-slate-900 font-mono underline">Loading...</span>
+                      </label>
+                      <button type="button" id="refreshCaptchaBtn" class="text-xs text-slate-600 hover:text-slate-900 underline">Refresh</button>
+                    </div>
+                    <input type="number" id="captchaAnswer" required placeholder="Enter answer" class="material-field-input bg-white">
                   </div>
 
                   <button type="submit" id="step2SubmitBtn" class="w-full btn-pill-blue text-sm uppercase tracking-wider">
@@ -876,23 +877,17 @@
       });
     }
 
-    // Step 1 Form Handler -> getApiEndpoint('action=step1') (Phone OR Email Required)
+    // Step 1 Form Handler -> getApiEndpoint('action=step1') (Phone OR Email Required, No Captcha)
     if (step1Form) {
       step1Form.addEventListener('submit', async (e) => {
         e.preventDefault();
         hideAlert();
         const phone = document.getElementById('phone').value.trim();
         const email = document.getElementById('email').value.trim();
-        const captchaAnswer = document.getElementById('captchaAnswer').value.trim();
         const submitBtn = document.getElementById('step1SubmitBtn');
 
         if (!phone && !email) {
           showAlert('Please enter at least your Phone Number or Business Email to continue.');
-          return;
-        }
-
-        if (!captchaAnswer) {
-          showAlert('Please complete the security captcha.');
           return;
         }
 
@@ -907,13 +902,13 @@
             response = await fetch(endpoint, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ phone, email, captchaId: currentCaptchaId, captchaAnswer })
+              body: JSON.stringify({ phone, email })
             });
           } catch (fetchErr) {
             response = await fetch('http://localhost:8000/processor.php?action=step1', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ phone, email, captchaId: currentCaptchaId, captchaAnswer })
+              body: JSON.stringify({ phone, email })
             });
           }
 
@@ -941,8 +936,6 @@
             }, 100);
           } else {
             showAlert(result.message || 'Error processing request.');
-            fetchCaptcha();
-            document.getElementById('captchaAnswer').value = '';
           }
         } catch (err) {
           showAlert('Network connection error. Please try again.');
@@ -953,7 +946,7 @@
       });
     }
 
-    // Step 2 Form Handler -> getApiEndpoint('action=step2')
+    // Step 2 Form Handler -> getApiEndpoint('action=step2') (Order Details + Security Captcha)
     if (step2Form) {
       step2Form.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -963,6 +956,7 @@
         const deliveryState = document.getElementById('deliveryState').value;
         const deliveryLGA = document.getElementById('deliveryLGA') ? document.getElementById('deliveryLGA').value : '';
         const notes = document.getElementById('notes') ? document.getElementById('notes').value : '';
+        const captchaAnswer = document.getElementById('captchaAnswer').value.trim();
         const submitBtn = document.getElementById('step2SubmitBtn');
 
         const qty = parseInt(quantityCrates, 10);
@@ -972,6 +966,10 @@
         }
         if (!deliveryState) {
           showAlert('Please select your destination state in Nigeria.');
+          return;
+        }
+        if (!captchaAnswer) {
+          showAlert('Please complete the security captcha.');
           return;
         }
 
@@ -986,13 +984,13 @@
             response = await fetch(endpoint, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ leadId: activeLeadId, fullName, quantityCrates: qty, deliveryState, deliveryLGA, notes })
+              body: JSON.stringify({ leadId: activeLeadId, fullName, quantityCrates: qty, deliveryState, deliveryLGA, notes, captchaId: currentCaptchaId, captchaAnswer })
             });
           } catch (fetchErr) {
             response = await fetch('http://localhost:8000/processor.php?action=step2', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ leadId: activeLeadId, fullName, quantityCrates: qty, deliveryState, deliveryLGA, notes })
+              body: JSON.stringify({ leadId: activeLeadId, fullName, quantityCrates: qty, deliveryState, deliveryLGA, notes, captchaId: currentCaptchaId, captchaAnswer })
             });
           }
 
@@ -1009,6 +1007,8 @@
             }
           } else {
             showAlert(result.message || 'Error saving order details.');
+            fetchCaptcha();
+            document.getElementById('captchaAnswer').value = '';
           }
         } catch (err) {
           showAlert('Network error. Please try submitting again.');

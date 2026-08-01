@@ -106,40 +106,15 @@ $data = json_decode($rawInput, true) ?: $_POST;
 if (!$action && isset($data['action'])) $action = $data['action'];
 
 // ----------------------------------------------------
-// ACTION 2: STEP 1 CONTACT CAPTURE (Phone OR Email Required)
+// ACTION 2: STEP 1 FAST CONTACT CAPTURE (Phone OR Email Required, No Captcha)
 // ----------------------------------------------------
 if ($action === 'step1') {
-    $fullName = trim(isset($data['fullName']) ? $data['fullName'] : '');
     $email = trim(isset($data['email']) ? $data['email'] : '');
     $phone = trim(isset($data['phone']) ? $data['phone'] : '');
-    $captchaId = trim(isset($data['captchaId']) ? $data['captchaId'] : '');
-    $captchaAnswer = trim(isset($data['captchaAnswer']) ? $data['captchaAnswer'] : '');
 
     // Validate that AT LEAST phone or email is provided
     if (empty($phone) && empty($email)) {
         echo json_encode(array('success' => false, 'message' => 'Please provide at least a Phone Number or Business Email to continue.'));
-        exit;
-    }
-
-    if (empty($captchaAnswer)) {
-        echo json_encode(array('success' => false, 'message' => 'Please complete the security captcha.'));
-        exit;
-    }
-
-    $expectedAnswer = null;
-    if ($captchaId) {
-        $captchaFile = __DIR__ . '/data/captchas/' . $captchaId . '.json';
-        if (file_exists($captchaFile)) {
-            $capData = json_decode(file_get_contents($captchaFile), true);
-            $expectedAnswer = $capData['answer'];
-        }
-    }
-    if ($expectedAnswer === null && isset($_SESSION['captcha_answer'])) {
-        $expectedAnswer = $_SESSION['captcha_answer'];
-    }
-
-    if ($expectedAnswer !== null && (int)$captchaAnswer !== (int)$expectedAnswer) {
-        echo json_encode(array('success' => false, 'message' => 'Security captcha answer is incorrect. Please try again.'));
         exit;
     }
 
@@ -149,7 +124,7 @@ if ($action === 'step1') {
 
     $newLead = array(
         'id' => $leadId,
-        'fullName' => !empty($fullName) ? $fullName : 'Wholesale Prospect (' . $contactLabel . ')',
+        'fullName' => 'Wholesale Prospect (' . $contactLabel . ')',
         'email' => $email,
         'phone' => $phone,
         'createdAt' => $timestamp,
@@ -194,7 +169,7 @@ if ($action === 'step1') {
 }
 
 // ----------------------------------------------------
-// ACTION 3: STEP 2 WHOLESALE ORDER SPECS (MIN 100 CRATES)
+// ACTION 3: STEP 2 WHOLESALE ORDER SPECS + SECURITY CAPTCHA
 // ----------------------------------------------------
 if ($action === 'step2') {
     $leadId = trim(isset($data['leadId']) ? $data['leadId'] : '');
@@ -203,6 +178,31 @@ if ($action === 'step2') {
     $deliveryState = trim(isset($data['deliveryState']) ? $data['deliveryState'] : '');
     $deliveryLGA = trim(isset($data['deliveryLGA']) ? $data['deliveryLGA'] : '');
     $notes = trim(isset($data['notes']) ? $data['notes'] : '');
+    $captchaId = trim(isset($data['captchaId']) ? $data['captchaId'] : '');
+    $captchaAnswer = trim(isset($data['captchaAnswer']) ? $data['captchaAnswer'] : '');
+
+    // Validate Security Captcha in Step 2
+    if (empty($captchaAnswer)) {
+        echo json_encode(array('success' => false, 'message' => 'Please complete the security captcha.'));
+        exit;
+    }
+
+    $expectedAnswer = null;
+    if ($captchaId) {
+        $captchaFile = __DIR__ . '/data/captchas/' . $captchaId . '.json';
+        if (file_exists($captchaFile)) {
+            $capData = json_decode(file_get_contents($captchaFile), true);
+            $expectedAnswer = $capData['answer'];
+        }
+    }
+    if ($expectedAnswer === null && isset($_SESSION['captcha_answer'])) {
+        $expectedAnswer = $_SESSION['captcha_answer'];
+    }
+
+    if ($expectedAnswer !== null && (int)$captchaAnswer !== (int)$expectedAnswer) {
+        echo json_encode(array('success' => false, 'message' => 'Security captcha answer is incorrect. Please try again.'));
+        exit;
+    }
 
     if ($quantityCrates < MIN_WHOLESALE_CRATES) {
         echo json_encode(array(
